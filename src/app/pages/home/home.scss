@@ -1,6 +1,5 @@
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(275px, 100%), 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
+article img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
 }
