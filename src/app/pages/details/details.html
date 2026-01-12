@@ -1,1 +1,65 @@
-<p>details works!</p>
+<div class="details-container">
+  @if (type() === 'album' && albumDetails(); as album) {
+  <section>
+    @if (album.images[0]) {
+    <img [src]="album.images[0].url" [alt]="album.title" />
+    }
+    <div>
+      <h1>{{ album.title }}</h1>
+      <div [routerLink]="['/details', 'artist', album.artists[0].id]">
+        <h2>
+          {{ album.artists[0]?.name }}
+        </h2>
+      </div>
+      <p>Released {{ album.releaseDate }}</p>
+    </div>
+
+    <div class="tracklist">
+      @for (track of (album.tracks?.items || []); track track.id) {
+      <div [routerLink]="['/details', 'track', track.id]">
+        <p>{{ track.trackNumber }}. {{ track.title }}</p>
+      </div>
+      }
+    </div>
+  </section>
+
+  } @if (type() === 'artist' && artistDetails(); as artist) {
+  <section>
+    @if (artist.images[0]) {
+    <img [src]="artist.images[0].url" [alt]="artist.name" class="artist-img" />
+    }
+    <div>
+      <h1>{{ artist.name }}</h1>
+    </div>
+
+    <div>
+      <h2>Discography</h2>
+      <div>
+        @for (album of (artistAlbums() || []); track album.id) {
+        <article [routerLink]="['/details', 'album', album.id]">
+          <div>
+            <img [src]="album.images[0]?.url" [alt]="album.title" class="discography-img" />
+          </div>
+          <h3>{{ album.title }}</h3>
+          <p>{{ album.releaseDate }}</p>
+        </article>
+        } @if (type() === 'artist' && artistAlbums().length === 0 && !detailsIsLoading()) {
+        <p>No albums found for this artist.</p>
+        }
+      </div>
+    </div>
+  </section>
+  } @if (type() === 'track' && trackDetails(); as track) {
+  <section>
+    <div>
+      <h1>{{ track.title }}</h1>
+      <img [src]="track.album?.imageUrl" [alt]="track.album?.title" />
+      <p>Appears on "{{ track.album?.title }}" by {{ track.artists[0]?.name }}</p>
+    </div>
+  </section>
+  } @if (!albumDetails() && !artistDetails() && !trackDetails()) {
+  <div>
+    <p>Loading...</p>
+  </div>
+  }
+</div>
