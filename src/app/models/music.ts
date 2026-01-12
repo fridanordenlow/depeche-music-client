@@ -28,6 +28,7 @@ export interface Artist {
   name: string;
   genres: string[];
   images: SpotifyImage[];
+  followers: number;
   popularity?: number;
 }
 
