@@ -30,6 +30,8 @@
     }
     <div>
       <h1>{{ artist.name }}</h1>
+      @if (artist.followers > 0) {
+      <strong>{{ artist.followers }}</strong> followers }
     </div>
 
     <div>
@@ -49,6 +51,7 @@
       </div>
     </div>
   </section>
+
   } @if (type() === 'track' && trackDetails(); as track) {
   <section>
     <div>

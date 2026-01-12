@@ -4,10 +4,11 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { filter, of, startWith, switchMap } from 'rxjs';
 import { Album, Artist, Track } from '../../models/music';
 import { RouterLink } from '@angular/router';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-details',
-  imports: [RouterLink],
+  imports: [RouterLink, DecimalPipe],
   templateUrl: './details.html',
   styleUrl: './details.scss',
 })
@@ -21,7 +22,7 @@ export class Details {
 
   constructor() {
     effect(() => {
-      console.log('Router skickade dessa värden:', {
+      console.log('Route params:', {
         type: this.type(),
         id: this.id(),
       });
@@ -58,7 +59,6 @@ export class Details {
           console.log(params);
           return this.spotifyService.getArtistAlbums(params.id);
         }
-        // Annars skickar vi tillbaka en tom lista direkt
         return of([]);
       }),
       startWith([])
