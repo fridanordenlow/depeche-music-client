@@ -6,6 +6,7 @@ export interface User {
 export interface AuthCredentials {
   email: string;
   password: string;
+  username?: string;
 }
 
 export interface LoginResponse {

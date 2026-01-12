@@ -1,1 +1,113 @@
-<p>auth works!</p>
+<div class="auth-container">
+  <mat-card class="auth-card">
+    <mat-card-header>
+      <mat-card-title>{{
+        isLoginMode() ? 'Welcome back!' : 'Welconme to Depeche Music!'
+      }}</mat-card-title>
+      <mat-card-subtitle>
+        {{ isLoginMode() ? 'Log in to your account' : 'Create Account' }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+      <mat-card-content>
+        @if (!isLoginMode()) {
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" placeholder="Choose a username" />
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+        }
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>E-mail</mat-label>
+          <input matInput formControlName="email" placeholder="name@example.com" />
+          <mat-icon matPrefix>email</mat-icon>
+          @if (authForm.get('email')?.hasError('email')) {
+          <mat-error>Please enter a valid email address</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="isPasswordHidden ? 'password' : 'text'"
+            formControlName="password"
+          />
+          <mat-icon matPrefix>lock</mat-icon>
+          <button
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="isPasswordHidden = !isPasswordHidden"
+          >
+            <mat-icon>{{ isPasswordHidden ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-flat-button color="primary" class="submit-btn" [disabled]="authForm.invalid">
+          {{ isLoginMode() ? 'LOG IN' : 'REGISTER' }}
+        </button>
+      </mat-card-actions>
+    </form>
+
+    <mat-card-footer class="auth-footer">
+      <button mat-button color="accent" (click)="toggleMode()">
+        {{ isLoginMode() ? 'No account? Register here' : 'Already have an account? Log in' }}
+      </button>
+    </mat-card-footer>
+  </mat-card>
+</div>
+
+<!-- <div class="auth-container">
+  <mat-card class="auth-card">
+    <mat-card-header>
+      <mat-card-title>Welcome back!</mat-card-title>
+      <mat-card-subtitle>Log in to your account</mat-card-subtitle>
+    </mat-card-header>
+
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>E-mail</mat-label>
+          <input matInput formControlName="email" placeholder="namn@exempel.se" />
+          <mat-icon matPrefix>email</mat-icon>
+          @if (authForm.get('email')?.hasError('email')) {
+          <mat-error> Please enter a valid email address</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="isPasswordHidden ? 'password' : 'text'"
+            formControlName="password"
+          />
+          <mat-icon matPrefix>lock</mat-icon>
+          <button
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="isPasswordHidden = !isPasswordHidden"
+          >
+            <mat-icon>{{ isPasswordHidden ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-flat-button color="primary" class="full-width" [disabled]="authForm.invalid">
+          LOG IN
+        </button>
+      </mat-card-actions>
+    </form>
+
+    <mat-card-footer class="auth-footer">
+      <button mat-button color="accent">No account? Register here</button>
+    </mat-card-footer>
+  </mat-card>
+</div> -->
