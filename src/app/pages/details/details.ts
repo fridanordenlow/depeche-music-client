@@ -1,5 +1,5 @@
 import { Component, computed, effect, inject, input, signal } from '@angular/core';
-import { Spotify } from '../../services/spotify';
+import { SpotifyService } from '../../services/spotify';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { filter, of, startWith, switchMap } from 'rxjs';
 import { Album, Artist, Track } from '../../models/music';
@@ -8,12 +8,12 @@ import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-details',
-  imports: [RouterLink, DecimalPipe],
+  imports: [RouterLink],
   templateUrl: './details.html',
   styleUrl: './details.scss',
 })
 export class Details {
-  private spotifyService = inject(Spotify);
+  private spotifyService = inject(SpotifyService);
 
   // Input from the router
   // For the route path: 'details/:type/:id'

@@ -5,7 +5,7 @@ import { Album, AlbumListResponse, Artist, Track } from '../models/music';
 @Injectable({
   providedIn: 'root',
 })
-export class Spotify {
+export class SpotifyService {
   private http = inject(HttpClient);
   private baseUrl = 'https://depeche-music-api.onrender.com/api/spotify';
 
