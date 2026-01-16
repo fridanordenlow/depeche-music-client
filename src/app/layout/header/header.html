@@ -1,3 +1,40 @@
 <header>
-  <img src="depeche-music-logo.svg" alt="Depeche Music logo" />
+  <mat-toolbar color="primary" class="main-header" role="banner">
+    <a [routerLink]="['/']" class="logo-link" aria-label="Go to home page">
+      <img src="dm-logo.svg" alt="Depeche Music logo" />
+    </a>
+
+    <nav class="desktop-menu" aria-label="Main navigation">
+      <a mat-button [routerLink]="['/']">Home</a>
+      <a mat-button [routerLink]="['/library']">Library</a>
+      <button mat-flat-button color="accent" class="login-button" [routerLink]="['/auth']">
+        Login
+      </button>
+    </nav>
+
+    <div class="mobile-menu">
+      <button mat-icon-button [matMenuTriggerFor]="mainMenu" aria-label="Open navigation menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <mat-menu #mainMenu="matMenu">
+        <button mat-menu-item [routerLink]="['/']">
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </button>
+
+        <button mat-menu-item [routerLink]="['/library']">
+          <mat-icon>library_music</mat-icon>
+          <span>Library</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item [routerLink]="['/auth']">
+          <mat-icon>login</mat-icon>
+          <span>Login</span>
+        </button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
 </header>
