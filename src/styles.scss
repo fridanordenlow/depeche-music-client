@@ -58,3 +58,10 @@ body {
   font: var(--mat-sys-body-medium);
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+
+.container-limit {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  width: 100%;
+}
