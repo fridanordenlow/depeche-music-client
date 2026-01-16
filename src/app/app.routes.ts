@@ -10,6 +10,6 @@ export const routes: Routes = [
   { path: 'search', component: Search },
   { path: 'details/:type/:id', component: Details },
   { path: 'auth', component: Auth },
-  { path: 'user-library', component: UserLibrary },
+  { path: 'library', component: UserLibrary },
   { path: '**', redirectTo: '' },
 ];
