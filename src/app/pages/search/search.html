@@ -1,1 +1,70 @@
-<p>search works!</p>
+<div class="search-container">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search for artist, tracks or releases</mat-label>
+    <input matInput [formControl]="searchControl" placeholder="t.ex. Depeche Mode" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  @if (isLoading()) {
+  <div class="status-container">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+  } @if (errorMessage(); as message) {
+  <div class="error-container">
+    <mat-icon>error_outline</mat-icon>
+    <p>{{ message }}</p>
+  </div>
+  } @if (searchResults(); as results) {
+  <div class="results-grid">
+    @if (results.artists.items.length) {
+    <mat-nav-list>
+      <h3 mat-subheader>Artists</h3>
+      @for (artist of results.artists.items; track artist.id) {
+      <a mat-list-item [routerLink]="['/details', 'artist', artist.id]">
+        @if (artist.images.length) {
+        <img matListItemAvatar [src]="artist.images[2]?.url" />
+        } @else {
+        <mat-icon matListItemAvatar>person</mat-icon>
+        }
+        <span matListItemTitle>{{ artist.name }}</span>
+      </a>
+      }
+    </mat-nav-list>
+    } @if (results.albums.items.length) {
+    <mat-nav-list>
+      <h3 mat-subheader>Releases</h3>
+      @for (album of results.albums.items; track album.id) {
+      <a mat-list-item [routerLink]="['/details', 'album', album.id]">
+        @if (album.images.length) {
+        <img matListItemAvatar [src]="album.images[2]?.url" />
+        } @else {
+        <mat-icon matListItemAvatar>album</mat-icon>
+        }
+        <span matListItemTitle>{{ album.title }}</span>
+        <span matListItemLine>{{ album.artists[0].name }}</span>
+      </a>
+      }
+    </mat-nav-list>
+    } @if (results.tracks.items.length) {
+    <mat-nav-list>
+      <h3 mat-subheader>Tracks</h3>
+      @for (track of results.tracks.items; track track.id) {
+      <a mat-list-item [routerLink]="['/details', 'track', track.id]">
+        @if (track.album?.imageUrl) {
+        <img matListItemAvatar [src]="track.album?.imageUrl" alt="{{ track.album?.title }}" />
+        } @else {
+        <mat-icon matListItemIcon>music_note</mat-icon>
+        }
+
+        <span matListItemTitle>{{ track.title }}</span>
+        <span matListItemLine>
+          {{ track.artists[0].name }}
+          @if (track.album) { • {{ track.album.title }} }
+        </span>
+      </a>
+      }
+    </mat-nav-list>
+    }
+  </div>
+  }
+</div>
