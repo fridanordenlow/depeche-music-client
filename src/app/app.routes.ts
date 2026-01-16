@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
-import { Search } from './pages/search/search';
 import { Details } from './pages/details/details';
 import { Auth } from './pages/auth/auth';
 import { UserLibrary } from './pages/user-library/user-library';
+import { SearchResults } from './pages/search-results/search-results';
 
 export const routes: Routes = [
   { path: '', component: Home },
-  { path: 'search', component: Search },
+  { path: 'search', component: SearchResults },
   { path: 'details/:type/:id', component: Details },
   { path: 'auth', component: Auth },
   { path: 'library', component: UserLibrary },

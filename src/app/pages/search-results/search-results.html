@@ -1,11 +1,10 @@
 <div class="search-container">
-  <mat-form-field appearance="outline" class="search-field">
-    <mat-label>Search for artist, tracks or releases</mat-label>
-    <input matInput [formControl]="searchControl" placeholder="t.ex. Depeche Mode" />
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
-
-  @if (isLoading()) {
+  @if (currentQuery() && !isLoading()) {
+  <h1 class="search-title">
+    Search results for "<span>{{ currentQuery() }}</span
+    >"
+  </h1>
+  } @if (isLoading()) {
   <div class="status-container">
     <mat-spinner diameter="40"></mat-spinner>
   </div>

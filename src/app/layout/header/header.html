@@ -1,8 +1,67 @@
-<header>
+<header class="custom-header container-limit">
+  <div class="header-content">
+    <div class="top-bar">
+      <a [routerLink]="['/']" class="logo-link">
+        <img src="dm-logo.svg" alt="Depeche Music logo" />
+      </a>
+
+      <nav class="desktop-menu">
+        <a mat-button [routerLink]="['/']">Home</a>
+        <a mat-button [routerLink]="['/library']">Library</a>
+        <button mat-flat-button color="accent" class="login-button" [routerLink]="['/auth']">
+          Login
+        </button>
+      </nav>
+
+      <div class="mobile-menu">
+        <button mat-button [matMenuTriggerFor]="mainMenu" class="menu-trigger">
+          <div class="menu-content">
+            <mat-icon>menu</mat-icon>
+            <span class="menu-text">MENY</span>
+          </div>
+        </button>
+
+        <mat-menu #mainMenu="matMenu">
+          <button mat-menu-item [routerLink]="['/']">
+            <mat-icon>home</mat-icon>
+            <span>Home</span>
+          </button>
+          <button mat-menu-item [routerLink]="['/library']">
+            <mat-icon>library_music</mat-icon>
+            <span>Library</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item [routerLink]="['/auth']">
+            <mat-icon>login</mat-icon>
+            <span>Login</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search for artists, tracks or releases</mat-label>
+      <input matInput [formControl]="searchControl" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+</header>
+
+<!-- <header>
   <mat-toolbar color="primary" class="main-header" role="banner">
     <a [routerLink]="['/']" class="logo-link" aria-label="Go to home page">
       <img src="dm-logo.svg" alt="Depeche Music logo" />
     </a>
+
+    <span class="spacer mobile-hide"></span>
+
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search for artists, tracks or releases</mat-label>
+      <input matInput [formControl]="searchControl" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <span class="spacer"></span>
 
     <nav class="desktop-menu" aria-label="Main navigation">
       <a mat-button [routerLink]="['/']">Home</a>
@@ -22,14 +81,11 @@
           <mat-icon>home</mat-icon>
           <span>Home</span>
         </button>
-
         <button mat-menu-item [routerLink]="['/library']">
           <mat-icon>library_music</mat-icon>
           <span>Library</span>
         </button>
-
         <mat-divider></mat-divider>
-
         <button mat-menu-item [routerLink]="['/auth']">
           <mat-icon>login</mat-icon>
           <span>Login</span>
@@ -37,4 +93,4 @@
       </mat-menu>
     </div>
   </mat-toolbar>
-</header>
+</header> -->

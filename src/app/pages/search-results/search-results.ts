@@ -1,11 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SpotifyService } from '../../services/spotify';
 import {
   catchError,
   debounceTime,
   distinctUntilChanged,
   filter,
+  map,
   of,
   switchMap,
   tap,
@@ -20,10 +21,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-search',
+  selector: 'app-search-results',
   imports: [
     ReactiveFormsModule,
     RouterLink,
@@ -33,13 +34,14 @@ import { RouterLink } from '@angular/router';
     MatIconModule,
     MatProgressSpinnerModule,
   ],
-  templateUrl: './search.html',
-  styleUrl: './search.scss',
+  templateUrl: './search-results.html',
+  styleUrl: './search-results.scss',
 })
-export class Search {
+export class SearchResults {
   private spotifyService = inject(SpotifyService);
+  private route = inject(ActivatedRoute);
 
-  searchControl = new FormControl('');
+  currentQuery = signal<string | null>(null);
   isLoading = signal(false);
   errorMessage = signal<string | null>(null);
 
@@ -51,14 +53,15 @@ export class Search {
     };
   }
 
-  // Observable pipeline for search - streamed to a signal
-  private search$ = this.searchControl.valueChanges.pipe(
+  private search$ = this.route.queryParams.pipe(
+    map((params) => params['q'] as string),
     filter((query): query is string => !!query && query.length > 2),
     debounceTime(500),
     distinctUntilChanged(),
-    tap(() => {
+    tap((query) => {
       this.isLoading.set(true);
       this.errorMessage.set(null);
+      this.currentQuery.set(query);
     }),
     switchMap((query) =>
       this.spotifyService.search(query).pipe(
