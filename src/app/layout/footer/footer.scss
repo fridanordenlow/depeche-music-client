@@ -1,0 +1,138 @@
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 2.5rem 2rem;
+
+  // max-width: 1200px; // Adjust max-width on body instead?
+  // width: 100%;
+  // margin: 0 auto;
+
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: #444; // Switch to variable later
+  font-size: 0.9rem;
+}
+
+.copyright-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+
+  a[mat-button] {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    background: transparent !important;
+
+    ::ng-deep {
+      .mat-mdc-button-state-layer,
+      .mat-mdc-button-persistent-ripple,
+      .mat-mdc-focus-indicator,
+      .mat-mdc-button-touch-target,
+      .mat-ripple-element {
+        background-color: transparent !important;
+        opacity: 0 !important;
+        display: none !important;
+      }
+    }
+
+    &:hover {
+      text-decoration: underline 2px;
+    }
+
+    &:active {
+      opacity: 0.7;
+      text-decoration: underline 2px;
+      background: transparent !important;
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(0, 0, 0, 0.3);
+      border-radius: 2px;
+    }
+  }
+}
+
+.separator {
+  color: #ccc;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .copyright-section {
+    flex-direction: column;
+    gap: 6px;
+
+    .separator {
+      display: none;
+    }
+  }
+}
+
+// .student-footer {
+//   background-color: transparent;
+//   border-top: 1px solid rgba(0, 0, 0, 0.1);
+//   padding: 2rem 1rem;
+//   height: auto; // Tillåter footern att växa vid behov
+// }
+
+// .footer-container {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   width: 100%;
+//   max-width: 1200px;
+//   margin: 0 auto;
+//   font-size: 0.9rem;
+//   color: #444;
+// }
+
+// .copyright-section {
+//   display: flex;
+//   align-items: center;
+//   gap: 10px;
+// }
+
+// .social-links {
+//   display: flex;
+
+//   a {
+//     font-weight: 500;
+//     letter-spacing: 1px;
+//     text-transform: uppercase;
+
+//     &:hover {
+//       text-decoration: underline 2px;
+//       background: transparent;
+//     }
+//   }
+// }
+
+// @media (max-width: 768px) {
+//   .footer-container {
+//     flex-direction: column;
+//     gap: 1.5rem;
+//     text-align: center;
+//   }
+
+//   .copyright-section {
+//     flex-direction: column;
+//     gap: 5px;
+
+//     .separator {
+//       display: none;
+//     }
+//   }
+// }

@@ -1,1 +1,12 @@
-<p>footer works!</p>
+<footer class="footer-container">
+  <div class="copyright-section">
+    <span>© {{ currentYear }} {{ name }}</span>
+    <span class="separator">|</span>
+    <span class="degree-info">{{ title }} @ {{ school }}</span>
+  </div>
+
+  <div class="social-links">
+    <a mat-button [href]="githubUrl" target="_blank">Github</a>
+    <a mat-button [href]="linkedInUrl" target="_blank">LinkedIn</a>
+  </div>
+</footer>
