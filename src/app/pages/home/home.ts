@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import { Spotify } from '../../services/spotify';
+import { SpotifyService } from '../../services/spotify';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { Album } from '../../models/music';
@@ -11,7 +11,7 @@ import { Album } from '../../models/music';
   styleUrl: './home.scss',
 })
 export class Home {
-  private spotifyService = inject(Spotify);
+  private spotifyService = inject(SpotifyService);
 
   private allNewReleases = toSignal(this.spotifyService.getNewReleases());
 
