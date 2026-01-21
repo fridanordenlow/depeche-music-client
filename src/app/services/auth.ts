@@ -39,7 +39,7 @@ export class AuthService {
     this.currentUserToken.set(null);
   }
 
-  public fetchProfile() {
+  public fetchUserProfile() {
     return this.http.get<UserProfile>(`${this.apiUrl}/me`).pipe(
       tap((user) => {
         this.currentUser.set(user);
