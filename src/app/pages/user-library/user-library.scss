@@ -1,0 +1,116 @@
+.library-container {
+  .library-header {
+    margin-bottom: 24px;
+  }
+  .status-header {
+    font-size: 1.1rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 32px 0 16px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+  }
+
+  mat-action-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+  }
+
+  mat-list-item {
+    height: auto !important;
+    padding: 0;
+
+    img[matListItemAvatar] {
+      width: 56px !important;
+      height: 56px !important;
+      border-radius: 3px;
+      margin-right: 20px !important;
+      object-fit: cover;
+    }
+
+    [matListItemTitle] {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-right: 8px;
+    }
+
+    [matListItemLine] {
+      color: #777;
+    }
+
+    [matListItemMeta] {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  mat-divider {
+    margin: 4px 0;
+    opacity: 0.5;
+  }
+
+  .simple-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .grid-item {
+    display: flex;
+    flex-direction: column;
+
+    // button {
+    //   padding: 0;
+    //   align-self: flex-start;
+    // }
+
+    img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      margin-bottom: 12px;
+      border-radius: 3px;
+
+      &.artist-img {
+        border-radius: 50%;
+      }
+    }
+
+    .grid-info {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 8px;
+
+      .album-title {
+        font-weight: 700;
+      }
+
+      .album-artist {
+        color: #666;
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 100px 0;
+    color: #a7a7a7;
+
+    mat-icon {
+      font-size: 64px;
+      height: 64px;
+      width: 64px;
+      margin-bottom: 24px;
+      opacity: 0.5;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+  }
+}
