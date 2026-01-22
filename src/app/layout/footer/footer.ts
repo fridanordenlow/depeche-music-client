@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -7,10 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [MatToolbarModule, MatButtonModule],
   templateUrl: './footer.html',
   styleUrl: './footer.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Footer {
   readonly name = 'Frida Nordenlöw';
-  readonly currentYear = new Date().getFullYear();
+  readonly currentYear = signal(new Date().getFullYear());
   readonly title = 'Front End Developer';
   readonly school = 'Medieinstitutet';
 
