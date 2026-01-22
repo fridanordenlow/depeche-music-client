@@ -6,10 +6,11 @@ import { MatDivider } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, take } from 'rxjs';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-header',
@@ -29,27 +30,41 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './header.scss',
 })
 export class Header {
-  private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
+  private readonly router = inject(Router);
+  // private destroyRef = inject(DestroyRef);
+  public auth = inject(AuthService);
 
   searchControl = new FormControl('');
 
   constructor() {
     this.searchControl.valueChanges
-      .pipe(debounceTime(500), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        filter((query): query is string => !!query && query.length > 2),
+        takeUntilDestroyed()
+      )
       .subscribe((query) => {
-        if (query && query.length > 2) {
-          this.router.navigate(['/search'], { queryParams: { q: query } });
-        }
+        this.router.navigate(['/search'], { queryParams: { q: query } });
       });
 
     this.router.events
       .pipe(
-        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-        takeUntilDestroyed(this.destroyRef)
+        filter((event) => event instanceof NavigationEnd),
+        takeUntilDestroyed()
       )
       .subscribe(() => {
         this.searchControl.setValue('', { emitEvent: false });
       });
+  }
+
+  onLogin() {
+    this.router.navigate(['/auth']);
+    // Todo: Add redirect to current page after login
+  }
+
+  onLogout() {
+    this.auth.logout();
+    this.router.navigate(['/']);
   }
 }

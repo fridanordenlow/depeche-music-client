@@ -1,5 +1,5 @@
-.custom-header {
-  margin-bottom: 2rem;
+header {
+  margin-bottom: 1rem;
 }
 
 .header-content {
@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100px;
+  padding: 1rem 0;
 }
 
 .logo-link img {
