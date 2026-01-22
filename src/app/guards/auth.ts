@@ -1,8 +1,9 @@
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth';
-import { Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 
-export const authGuard = () => {
+// route is needed as a placeholder for canActivate but is not used here
+export const authGuard = (_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
@@ -10,9 +11,9 @@ export const authGuard = () => {
     return true;
   }
 
-  console.log('Access denied - Redirecting to login');
+  console.log('Access denied - Redirecting to login from:', state.url);
 
   return router.createUrlTree(['/auth'], {
-    queryParams: { reason: 'denied' },
+    queryParams: { returnUrl: state.url, reason: 'denied' },
   });
 };
