@@ -13,11 +13,11 @@
 
   .status-header {
     font-size: 1.1rem;
-    color: #888;
+    color: var(--mat-sys-primary);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin: 32px 0 16px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #e5e5e5;
     padding-bottom: 8px;
   }
 

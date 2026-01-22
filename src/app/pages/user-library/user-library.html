@@ -22,7 +22,12 @@
             <span matListItemTitle>{{ item.metadata.title }}</span>
             <span matListItemLine>{{ item.metadata.artists?.[0]?.name }}</span>
             <div matListItemMeta>
-              <button mat-icon-button (click)="deleteItem(item._id)">
+              <button
+                mat-icon-button
+                (click)="deleteItem(item._id)"
+                [aria-label]="'Delete ' + item.metadata.title + ' from library'"
+                type="button"
+              >
                 <mat-icon>delete_outline</mat-icon>
               </button>
             </div>
