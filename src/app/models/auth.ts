@@ -1,15 +1,9 @@
 export interface User {
   id: string;
   username: string;
+  email?: string;
+  createdAt?: string;
 }
-
-export interface UserProfile {
-  id: string;
-  username: string;
-  email: string;
-  createdAt: string;
-}
-
 export interface AuthCredentials {
   email: string;
   password: string;

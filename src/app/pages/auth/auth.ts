@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,6 +23,7 @@ import { AuthCredentials } from '../../models/auth';
   ],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Auth {
   public authService = inject(AuthService);

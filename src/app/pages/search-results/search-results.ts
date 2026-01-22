@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SpotifyService } from '../../services/spotify';
 import {
@@ -36,6 +36,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
   ],
   templateUrl: './search-results.html',
   styleUrl: './search-results.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchResults {
   private spotifyService = inject(SpotifyService);

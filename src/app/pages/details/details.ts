@@ -1,16 +1,16 @@
-import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input } from '@angular/core';
 import { SpotifyService } from '../../services/spotify';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { filter, of, startWith, switchMap } from 'rxjs';
 import { Album, Artist, Track } from '../../models/music';
 import { RouterLink } from '@angular/router';
-import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-details',
   imports: [RouterLink],
   templateUrl: './details.html',
   styleUrl: './details.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Details {
   private spotifyService = inject(SpotifyService);
@@ -19,15 +19,6 @@ export class Details {
   // For the route path: 'details/:type/:id'
   type = input<'artist' | 'album' | 'track'>();
   id = input<string>('');
-
-  constructor() {
-    effect(() => {
-      console.log('Route params:', {
-        type: this.type(),
-        id: this.id(),
-      });
-    });
-  }
 
   private routeParams = computed(() => {
     const currentType = this.type();
