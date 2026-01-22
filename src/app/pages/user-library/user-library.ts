@@ -73,6 +73,10 @@ export class UserLibrary {
   albums = computed(() => this.allItems().filter((item) => item.itemType === 'album'));
   tracks = computed(() => this.allItems().filter((item) => item.itemType === 'track'));
 
+  getItemsByStatus(items: UserLibraryItem[], status: string): UserLibraryItem[] {
+    return items.filter((item) => item.status === status);
+  }
+
   deleteItem(libraryItemId: string) {
     this.libraryService.removeItem(libraryItemId).subscribe(() => {
       this.libraryResource.reload();

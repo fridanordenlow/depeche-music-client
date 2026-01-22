@@ -12,13 +12,19 @@
   }
 
   .status-header {
+    display: flex;
     font-size: 1.1rem;
-    color: var(--mat-sys-primary);
+    color: #e06c53;
+    // color: var(--mat-sys-primary);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin: 32px 0 16px;
     border-bottom: 1px solid #e5e5e5;
     padding-bottom: 8px;
+
+    mat-icon {
+      margin-right: 8px;
+    }
   }
 
   mat-action-list {
@@ -121,5 +127,11 @@
     p {
       font-size: 1.2rem;
     }
+  }
+
+  .empty-category-text {
+    color: #757575;
+    padding: 16px 0;
+    margin: 8px 0 24px 0;
   }
 }
