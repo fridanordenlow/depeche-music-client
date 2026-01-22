@@ -1,8 +1,17 @@
 <div class="library-container">
-  <h1 class="library-header">My Library</h1>
+  @if (currentUser(); as user) {
+  <div class="user-greeting">
+    <h2>Welcome, {{ user.username }}!</h2>
+    <p>
+      See your collection of artist, albums and tracks below. Continue building your library by
+      exploring new releases, user recommendations and search for music.
+    </p>
+  </div>
+  }
 
+  <h1 class="library-header">My Library</h1>
   <mat-tab-group animationDuration="0ms">
-    <mat-tab label="Tracks">
+    <mat-tab label="Tracks ">
       @if (tracks().length > 0) { @for (status of ['love', 'explore', 'listened']; track status) {
       <section>
         <h2 class="status-header">{{ statusTitles[status] }}</h2>

@@ -1,4 +1,12 @@
-import { Component, computed, inject, resource, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  resource,
+  signal,
+} from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { LibraryService } from '../../services/library';
 import { UserLibraryItem } from '../../models/library';
@@ -8,6 +16,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-user-library',
@@ -23,14 +32,24 @@ import { MatTabsModule } from '@angular/material/tabs';
   ],
   templateUrl: './user-library.html',
   styleUrl: './user-library.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserLibrary {
   private libraryService = inject(LibraryService);
+  private authService = inject(AuthService);
+
+  currentUser = this.authService.user;
+
+  constructor() {
+    effect(() => {
+      console.log('Current user:', this.currentUser());
+    });
+  }
 
   statusTitles: Record<string, string> = {
     love: 'Loved',
     explore: 'Wish to explore',
-    listened: 'Already listened',
+    listened: 'Already discovered',
   };
 
   // resource() creates a signal that handles async data fetching

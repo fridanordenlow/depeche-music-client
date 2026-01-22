@@ -1,7 +1,16 @@
 .library-container {
+  .user-greeting {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
   .library-header {
     margin-bottom: 24px;
   }
+
   .status-header {
     font-size: 1.1rem;
     color: #888;
