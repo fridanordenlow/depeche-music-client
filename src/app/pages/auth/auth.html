@@ -1,6 +1,6 @@
 <div class="auth-container">
   @if (accessDenied()) {
-  <div class="access-denied-message">
+  <div class="access-denied-message message">
     <mat-icon>lock_outline</mat-icon>
     <span>Please log in to access your library.</span>
   </div>
@@ -51,6 +51,12 @@
             <mat-icon>{{ isPasswordHidden ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
         </mat-form-field>
+        @if (errorMessage()) {
+        <div class="error-message message">
+          <mat-icon>error_outline</mat-icon>
+          <span>{{ errorMessage() }}</span>
+        </div>
+        }
       </mat-card-content>
 
       <mat-card-actions>
@@ -67,53 +73,3 @@
     </mat-card-footer>
   </mat-card>
 </div>
-
-<!-- <div class="auth-container">
-  <mat-card class="auth-card">
-    <mat-card-header>
-      <mat-card-title>Welcome back!</mat-card-title>
-      <mat-card-subtitle>Log in to your account</mat-card-subtitle>
-    </mat-card-header>
-
-    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
-      <mat-card-content>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>E-mail</mat-label>
-          <input matInput formControlName="email" placeholder="namn@exempel.se" />
-          <mat-icon matPrefix>email</mat-icon>
-          @if (authForm.get('email')?.hasError('email')) {
-          <mat-error> Please enter a valid email address</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Password</mat-label>
-          <input
-            matInput
-            [type]="isPasswordHidden ? 'password' : 'text'"
-            formControlName="password"
-          />
-          <mat-icon matPrefix>lock</mat-icon>
-          <button
-            type="button"
-            mat-icon-button
-            matSuffix
-            (click)="isPasswordHidden = !isPasswordHidden"
-          >
-            <mat-icon>{{ isPasswordHidden ? 'visibility_off' : 'visibility' }}</mat-icon>
-          </button>
-        </mat-form-field>
-      </mat-card-content>
-
-      <mat-card-actions>
-        <button mat-flat-button color="primary" class="full-width" [disabled]="authForm.invalid">
-          LOG IN
-        </button>
-      </mat-card-actions>
-    </form>
-
-    <mat-card-footer class="auth-footer">
-      <button mat-button color="accent">No account? Register here</button>
-    </mat-card-footer>
-  </mat-card>
-</div> -->

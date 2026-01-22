@@ -1,15 +1,15 @@
 import { Component, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { lastValueFrom, map } from 'rxjs';
+import { map } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthCredentials } from '../../models/auth';
 import { AuthService } from '../../services/auth';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { AuthCredentials } from '../../models/auth';
 
 @Component({
   selector: 'app-auth',
@@ -29,6 +29,7 @@ export class Auth {
   public router = inject(Router);
   public isLoginMode = signal(true);
   public isPasswordHidden = true;
+  public errorMessage = signal<string | null>(null);
 
   private route = inject(ActivatedRoute);
 
@@ -59,19 +60,26 @@ export class Auth {
   public async onSubmit(): Promise<void> {
     if (this.authForm.invalid) return;
 
+    this.errorMessage.set(null);
+
     const credentials = this.authForm.getRawValue() as AuthCredentials;
 
-    try {
-      if (this.isLoginMode()) {
-        const response = await lastValueFrom(this.authService.login(credentials));
-        console.log('Successful login:', response);
-      } else {
-        const response = await lastValueFrom(this.authService.register(credentials));
-        console.log('Successful registration:', response);
-      }
-      this.router.navigate(['/library']);
-    } catch (error) {
-      console.error('Login failed:', error);
-    }
+    const request$ = this.isLoginMode()
+      ? this.authService.login(credentials)
+      : this.authService.register(credentials);
+
+    request$.subscribe({
+      next: () => {
+        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/library';
+        this.router.navigateByUrl(returnUrl);
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.errorMessage.set('Invalid email or password.');
+        } else {
+          this.errorMessage.set('An unexpected error occurred. Please try again later.');
+        }
+      },
+    });
   }
 }
