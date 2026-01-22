@@ -1,12 +1,27 @@
 .auth-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 24px;
   // background-color: var(--mat-sys-surface-container-lowest);
+
+  .access-denied-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    // background-color: #ffdddd;
+    color: #a94442;
+    // padding: 12px 16px;
+    margin-bottom: 24px;
+    width: 100%;
+    max-width: 400px;
+  }
 
   .auth-card {
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
     padding: 16px;
     border-radius: 12px;
   }

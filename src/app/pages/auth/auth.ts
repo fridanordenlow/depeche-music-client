@@ -1,14 +1,15 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { lastValueFrom } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { lastValueFrom, map } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthCredentials } from '../../models/auth';
 import { AuthService } from '../../services/auth';
-import { Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-auth',
@@ -24,11 +25,16 @@ import { Router } from '@angular/router';
   styleUrl: './auth.scss',
 })
 export class Auth {
+  public authService = inject(AuthService);
+  public router = inject(Router);
   public isLoginMode = signal(true);
   public isPasswordHidden = true;
 
-  public authService = inject(AuthService);
-  public router = inject(Router);
+  private route = inject(ActivatedRoute);
+
+  public accessDenied = toSignal(
+    this.route.queryParams.pipe(map((params) => params['reason'] === 'denied'))
+  );
 
   public authForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),

@@ -1,8 +1,14 @@
 <div class="auth-container">
+  @if (accessDenied()) {
+  <div class="access-denied-message">
+    <mat-icon>lock_outline</mat-icon>
+    <span>Please log in to access your library.</span>
+  </div>
+  }
   <mat-card class="auth-card">
     <mat-card-header>
       <mat-card-title>{{
-        isLoginMode() ? 'Welcome back!' : 'Welconme to Depeche Music!'
+        isLoginMode() ? 'Welcome back!' : 'Welcome to Depeche Music!'
       }}</mat-card-title>
       <mat-card-subtitle>
         {{ isLoginMode() ? 'Log in to your account' : 'Create Account' }}

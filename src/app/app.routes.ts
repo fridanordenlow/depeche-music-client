@@ -4,12 +4,13 @@ import { Details } from './pages/details/details';
 import { Auth } from './pages/auth/auth';
 import { UserLibrary } from './pages/user-library/user-library';
 import { SearchResults } from './pages/search-results/search-results';
+import { authGuard } from './guards/auth';
 
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'search', component: SearchResults },
   { path: 'details/:type/:id', component: Details },
   { path: 'auth', component: Auth },
-  { path: 'library', component: UserLibrary },
+  { path: 'library', component: UserLibrary, canActivate: [authGuard] },
   { path: '**', redirectTo: '' },
 ];
