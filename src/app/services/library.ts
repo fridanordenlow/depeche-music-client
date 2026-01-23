@@ -12,22 +12,19 @@ export class LibraryService {
 
   // Signal to hold the user's library items
   private _userLibrary = signal<UserLibraryItem[]>([]);
-
-  ///
-  // DETTA FUNGERAR INTE SOM DET SKA
-  ///
-  private libraryLoaded = false;
-
   // Readonly version of the user library signal
   public userLibrary = this._userLibrary.asReadonly();
 
+  private libraryLoaded = signal(false);
+
   getUserLibrary() {
-    if (this.libraryLoaded) return of(this._userLibrary());
+    if (this.libraryLoaded()) return of(this._userLibrary());
+
     return this.http.get<UserLibraryItem[]>(`${this.apiUrl}/get`).pipe(
       tap((items) => {
         // Update the signal with the fetched items
         this._userLibrary.set(items);
-        this.libraryLoaded = true;
+        this.libraryLoaded.set(true);
       })
     );
   }
