@@ -8,10 +8,12 @@ import { LibraryService } from '../../services/library';
 import { MatIcon } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-details',
-  imports: [RouterLink, MatIcon, MatTooltipModule],
+  imports: [RouterLink, MatIcon, MatTooltipModule, MatDialogModule],
   templateUrl: './details.html',
   styleUrl: './details.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,28 +22,19 @@ export class Details {
   private spotifyService = inject(SpotifyService);
   private libraryService = inject(LibraryService);
   private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
 
   // Input from the router
   // For the route path: 'details/:type/:id'
   type = input<'artist' | 'album' | 'track'>();
   id = input<string>('');
 
-  // private routeParams = computed(() => {
-  //   const currentType = this.type();
-  //   const currentId = this.id();
-  //   if (!currentType || !currentId) return null;
-  //   return { type: currentType, id: currentId };
-  // });
-
   private routeParams = computed(() => {
     const currentType = this.type();
     const currentId = this.id();
-    return currentType && currentId ? { type: currentType, id: currentId } : null;
+    if (!currentType || !currentId) return null;
+    return { type: currentType, id: currentId };
   });
-
-  // existingItem = computed(() =>
-  //   this.libraryService.userLibrary().find((item) => item.spotifyItemId === this.id())
-  // );
 
   existingItem = computed(() => {
     const library = this.libraryService.userLibrary();
@@ -97,7 +90,27 @@ export class Details {
     const existing = this.existingItem();
 
     if (existing && existing.status === status) {
-      this.snackBar.open(`Already marked as ${status}`, 'OK', { duration: 2000 });
+      const dialogRef = this.dialog.open(ConfirmDialog, {
+        width: '300px',
+        data: {
+          title: 'Remove from library?',
+          message: `This item is already in your library. Do you want to remove it?`,
+          confirmText: 'Remove',
+          cancelText: 'Cancel',
+        },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result === true) {
+          this.libraryService.removeItem(existing._id).subscribe({
+            next: () => this.snackBar.open('Removed from library', 'Close', { duration: 3000 }),
+            error: (err) => {
+              this.snackBar.open('Could not remove item. Try again later.', 'OK');
+              console.error('Removal error:', err);
+            },
+          });
+        }
+      });
       return;
     }
 
@@ -109,10 +122,10 @@ export class Details {
       });
     };
 
-    const handleError = (err: any) => {
+    const handleError = (err: unknown) => {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
       this.snackBar.open('Could not add item to library. Try again later.', 'OK');
-      console.log('Status code:', err.status);
-      console.log('Error Body:', err.error);
+      console.log('Library error:', errorMessage);
     };
 
     if (existing) {
