@@ -10,10 +10,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
+import { DurationPipe } from '../../shared/pipes/duration';
 
 @Component({
   selector: 'app-details',
-  imports: [RouterLink, MatIcon, MatTooltipModule, MatDialogModule],
+  imports: [RouterLink, MatIcon, MatTooltipModule, MatDialogModule, DurationPipe],
   templateUrl: './details.html',
   styleUrl: './details.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
