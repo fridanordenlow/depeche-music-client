@@ -124,7 +124,7 @@ export class Details {
 
     const handleError = (err: unknown) => {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-      this.snackBar.open('Could not add item to library. Try again later.', 'OK');
+      this.snackBar.open('Could not add item to library. Are you logged in?', 'OK');
       console.log('Library error:', errorMessage);
     };
 
