@@ -14,10 +14,21 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  font-weight: 400;
 
-  button[mat-flat-button],
-  a[mat-button] {
-    border-radius: 5px;
+  .menu-item {
+    &:hover {
+      text-decoration: underline 2px;
+    }
+  }
+
+  .auth-btn {
+    padding-top: 2px;
+    margin-left: 10px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    border: 1px solid var(--mat-sys-primary);
+    color: var(--mat-sys-primary);
   }
 }
 

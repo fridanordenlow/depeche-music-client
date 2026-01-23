@@ -4,12 +4,12 @@
   </a>
 
   <nav class="desktop-menu">
-    <a mat-button [routerLink]="['/']">Home</a>
-    <a mat-button [routerLink]="['/library']">My Library</a>
+    <a mat-button class="menu-item" [routerLink]="['/']">Home</a>
+    <a mat-button class="menu-item" [routerLink]="['/library']">My Library</a>
     @if (auth.isAuthenticated()) {
-    <button mat-flat-button color="warn" (click)="onLogout()">Logout</button>
+    <button mat-stroked-button class="auth-btn" (click)="onLogout()">Log out</button>
     } @else {
-    <button mat-flat-button color="accent" (click)="onLogin()">Login</button>
+    <button mat-stroked-button class="auth-btn" (click)="onLogin()">Log in</button>
     }
   </nav>
 
