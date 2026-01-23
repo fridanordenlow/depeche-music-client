@@ -1,5 +1,17 @@
 <mat-form-field appearance="outline" class="search-field">
   <mat-label>Search for artists, tracks or releases</mat-label>
-  <input matInput [formControl]="searchControl" />
-  <mat-icon matSuffix>search</mat-icon>
+  <input matInput [formControl]="searchControl" placeholder="Ex. Depeche Mode" #searchInput />
+
+  <mat-icon matPrefix>search</mat-icon>
+
+  @if (searchControl.value) {
+  <button
+    mat-icon-button
+    matSuffix
+    (click)="searchControl.setValue(''); searchInput.focus()"
+    aria-label="Clear"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+  }
 </mat-form-field>

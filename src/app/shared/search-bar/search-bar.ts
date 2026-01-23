@@ -3,13 +3,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-search-bar',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatIconModule, MatInputModule],
+  imports: [
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+  ],
   templateUrl: './search-bar.html',
   styleUrl: './search-bar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
