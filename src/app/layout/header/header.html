@@ -1,58 +1,47 @@
-<header class="container-limit">
-  <div class="header-content">
-    <div class="top-bar">
-      <a [routerLink]="['/']" class="logo-link">
-        <img src="dm-logo.svg" alt="Depeche Music logo" />
-      </a>
+<header class="header-content container-limit">
+  <a [routerLink]="['/']" class="logo-link">
+    <img src="dm-logo.svg" alt="Depeche Music logo" />
+  </a>
 
-      <nav class="desktop-menu">
-        <a mat-button [routerLink]="['/']">Home</a>
-        <a mat-button [routerLink]="['/library']">My Library</a>
-        @if (auth.isAuthenticated()) {
-        <button mat-flat-button color="warn" (click)="onLogout()">Logout</button>
-        } @else {
-        <button mat-flat-button color="accent" (click)="onLogin()">Login</button>
-        }
-      </nav>
+  <nav class="desktop-menu">
+    <a mat-button [routerLink]="['/']">Home</a>
+    <a mat-button [routerLink]="['/library']">My Library</a>
+    @if (auth.isAuthenticated()) {
+    <button mat-flat-button color="warn" (click)="onLogout()">Logout</button>
+    } @else {
+    <button mat-flat-button color="accent" (click)="onLogin()">Login</button>
+    }
+  </nav>
 
-      <div class="mobile-menu">
-        <button mat-button [matMenuTriggerFor]="mainMenu" class="menu-trigger">
-          <div class="menu-content">
-            <mat-icon>menu</mat-icon>
-            <span class="menu-text">MENY</span>
-          </div>
-        </button>
-
-        <mat-menu #mainMenu="matMenu">
-          <button mat-menu-item [routerLink]="['/']">
-            <mat-icon>home</mat-icon>
-            <span>Home</span>
-          </button>
-          <button mat-menu-item [routerLink]="['/library']">
-            <mat-icon>library_music</mat-icon>
-            <span>My Library</span>
-          </button>
-          <mat-divider></mat-divider>
-          @if (auth.isAuthenticated()) {
-          <button mat-menu-item (click)="onLogout()">
-            <mat-icon>logout</mat-icon>
-            <span>Logout</span>
-          </button>
-          } @else {
-          <button mat-menu-item (click)="onLogin()">
-            <mat-icon>login</mat-icon>
-            <span>Login</span>
-          </button>
-          }
-        </mat-menu>
+  <div class="mobile-menu">
+    <button mat-button [matMenuTriggerFor]="mainMenu" class="menu-trigger">
+      <div class="menu-content">
+        <mat-icon>menu</mat-icon>
+        <span class="menu-text">MENY</span>
       </div>
-    </div>
+    </button>
 
-    <!-- TODO: Move search to own component -->
-    <mat-form-field appearance="outline" class="search-field">
-      <mat-label>Search for artists, tracks or releases</mat-label>
-      <input matInput [formControl]="searchControl" />
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+    <mat-menu #mainMenu="matMenu">
+      <button mat-menu-item [routerLink]="['/']">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/library']">
+        <mat-icon>library_music</mat-icon>
+        <span>My Library</span>
+      </button>
+      <mat-divider></mat-divider>
+      @if (auth.isAuthenticated()) {
+      <button mat-menu-item (click)="onLogout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+      } @else {
+      <button mat-menu-item (click)="onLogin()">
+        <mat-icon>login</mat-icon>
+        <span>Login</span>
+      </button>
+      }
+    </mat-menu>
   </div>
 </header>
