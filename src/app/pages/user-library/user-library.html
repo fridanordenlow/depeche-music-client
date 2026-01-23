@@ -16,29 +16,20 @@
       @if (tracks().length > 0) { @for (status of ['love', 'explore', 'listened']; track status) {
       <section>
         <h2 class="status-header">
-          @if (status === 'love') {
-          <mat-icon>favorite</mat-icon>
-          } @else if (status === 'explore') {
-          <mat-icon>explore</mat-icon>
-          } @else {
-          <mat-icon>check_circle</mat-icon>
-          }
+          @if (status === 'love') { <mat-icon>favorite</mat-icon> } @else if (status === 'explore')
+          { <mat-icon>explore</mat-icon> } @else { <mat-icon>check_circle</mat-icon> }
           {{ statusTitles[status] }}
         </h2>
+
         @let filteredTracks = getItemsByStatus(tracks(), status); @if (filteredTracks.length > 0) {
         <mat-action-list>
           @for (item of filteredTracks; track item._id) {
           <mat-list-item>
-            <img matListItemAvatar [src]="item.metadata.imageUrl" alt="Album cover" />
+            <img matListItemAvatar [src]="item.metadata.imageUrl || ''" alt="Album cover" />
             <span matListItemTitle>{{ item.metadata.title }}</span>
             <span matListItemLine>{{ item.metadata.artists?.[0]?.name }}</span>
             <div matListItemMeta>
-              <button
-                mat-icon-button
-                (click)="deleteItem(item._id)"
-                [aria-label]="'Delete ' + item.metadata.title + ' from library'"
-                type="button"
-              >
+              <button mat-icon-button (click)="deleteItem(item._id)" type="button">
                 <mat-icon>delete_outline</mat-icon>
               </button>
             </div>
@@ -66,7 +57,7 @@
         <div class="simple-grid">
           @for (item of filteredAlbums; track item._id) {
           <div class="grid-item">
-            <img [src]="item.metadata.imageUrl" alt="Album cover" />
+            <img [src]="item.metadata.imageUrl || ''" alt="Album cover" />
             <div class="grid-info">
               <p class="album-title">{{ item.metadata.title }}</p>
               <p class="album-artist">{{ item.metadata.artists?.[0]?.name }}</p>
@@ -104,7 +95,7 @@
         <div class="simple-grid">
           @for (item of filteredArtists; track item._id) {
           <div class="grid-item">
-            <img [src]="item.metadata.imageUrl" class="artist-img" alt="Artist photo" />
+            <img [src]="item.metadata.imageUrl || ''" class="artist-img" alt="Artist photo" />
             <div class="grid-info">
               <strong>{{ item.metadata.name }}</strong>
               <button
@@ -139,133 +130,3 @@
   </div>
   }
 </div>
-
-<!-- <div class="library-container">
-  @if (currentUser(); as user) {
-  <div class="user-greeting">
-    <h2>Welcome, {{ user.username }}!</h2>
-    <p>
-      See your collection of artist, albums and tracks below. Continue building your library by
-      exploring new releases, user recommendations and search for music.
-    </p>
-  </div>
-  }
-
-  <h1 class="library-header">My Library</h1>
-  <mat-tab-group animationDuration="0ms">
-    <mat-tab label="Tracks ">
-      @if (tracks().length > 0) { 
-        @for (status of ['love', 'explore', 'listened']; track status) {
-      <section>
-        <h2 class="status-header">{{ statusTitles[status] }}</h2>
-
-        @let filteredTracks = getItemsByStatus(tracks(), status); 
-        
-        @if (filteredTracks.length > 0) {
-            <mat-action-list>
-              @for (item of tracks(); track item._id) { @if (item.status === status) {
-              <mat-list-item>
-                <img matListItemAvatar [src]="item.metadata.imageUrl" alt="Album cover for track" />
-                <span matListItemTitle>{{ item.metadata.title }}</span>
-                <span matListItemLine>{{ item.metadata.artists?.[0]?.name }}</span>
-                <div matListItemMeta>
-                  <button
-                    mat-icon-button
-                    (click)="deleteItem(item._id)"
-                    [aria-label]="'Delete ' + item.metadata.title + ' from library'"
-                    type="button"
-                  >
-                    <mat-icon>delete_outline</mat-icon>
-                  </button>
-                </div>
-              </mat-list-item>
-              <mat-divider></mat-divider>
-              } 
-            </mat-action-list> 
-        } @else {
-        <div class="empty-state">
-          <mat-icon>music_note</mat-icon>
-          <p>No {{ status }} tracks found in your library.</p>
-        </div>
-        }
-      </section>
-      } } @else if (!libraryResource.isLoading()) {
-      <div class="empty-state">
-        <mat-icon>music_off</mat-icon>
-        <p>No tracks found in your library.</p>
-      </div>
-      }
-    </mat-tab>
-      
-    <mat-tab label="Albums">
-      @if (albums().length > 0) { @for (status of ['love', 'explore', 'listened']; track status) {
-      <section>
-        <h2 class="status-header">{{ statusTitles[status] }}</h2>
-        <div class="simple-grid">
-          @for (item of albums(); track item._id) { @if (item.status === status) {
-          <div class="grid-item">
-            <img [src]="item.metadata.imageUrl" />
-            <div class="grid-info">
-              <p class="album-title">{{ item.metadata.title }}</p>
-              <p class="album-artist">{{ item.metadata.artists?.[0]?.name }}</p>
-              <button
-                mat-button
-                color="warn"
-                (click)="deleteItem(item._id)"
-                [aria-label]="'Delete ' + item.metadata.title + ' from library'"
-                type="button"
-              >
-                <mat-icon>delete_outline</mat-icon>
-              </button>
-            </div>
-          </div>
-          } }
-        </div>
-      </section>
-      } } @else if (!libraryResource.isLoading()) {
-      <div class="empty-state">
-        <mat-icon>album</mat-icon>
-        <p>No albums found in your library.</p>
-      </div>
-      }
-    </mat-tab>
-
-    <mat-tab label="Artists">
-      @if (artists().length > 0) { @for (status of ['love', 'explore', 'listened']; track status) {
-      <section>
-        <h2 class="status-header">{{ statusTitles[status] }}</h2>
-        <div class="simple-grid">
-          @for (item of artists(); track item._id) { @if (item.status === status) {
-          <div class="grid-item">
-            <img [src]="item.metadata.imageUrl" class="artist-img" />
-            <div class="grid-info">
-              <strong>{{ item.metadata.name }}</strong>
-              <button
-                mat-button
-                color="warn"
-                (click)="deleteItem(item._id)"
-                [aria-label]="'Delete ' + item.metadata.name + ' from library'"
-                type="button"
-              >
-                <mat-icon>delete_outline</mat-icon>
-              </button>
-            </div>
-          </div>
-          } }
-        </div>
-      </section>
-      } } @else if (!libraryResource.isLoading()) {
-      <div class="empty-state">
-        <mat-icon>person</mat-icon>
-        <p>No artists found in your library.</p>
-      </div>
-      }
-    </mat-tab>
-  </mat-tab-group>
-
-  @if (libraryResource.isLoading()) {
-  <div>
-    <mat-spinner diameter="50"></mat-spinner>
-  </div>
-  }
-</div> -->

@@ -15,25 +15,15 @@ export class LibraryService {
   // Readonly version of the user library signal
   public userLibrary = this._userLibrary.asReadonly();
 
-  private libraryLoaded = signal(false);
-
   getUserLibrary() {
-    if (this.libraryLoaded()) return of(this._userLibrary());
-
     return this.http.get<UserLibraryItem[]>(`${this.apiUrl}/get`).pipe(
       tap((items) => {
-        // Update the signal with the fetched items
         this._userLibrary.set(items);
-        this.libraryLoaded.set(true);
       })
     );
   }
 
-  addToUserLibrary(
-    spotifyItemId: string,
-    itemType: 'artist' | 'album' | 'track',
-    status: 'love' | 'explore' | 'listened'
-  ) {
+  addToUserLibrary(spotifyItemId: string, itemType: string, status: string) {
     return this.http
       .post<{ message: string; item: UserLibraryItem }>(`${this.apiUrl}/add`, {
         spotifyItemId,
@@ -42,7 +32,6 @@ export class LibraryService {
       })
       .pipe(
         tap((response) => {
-          // Update the signal with the newly added item
           this._userLibrary.update((items) => [...items, response.item]);
         })
       );

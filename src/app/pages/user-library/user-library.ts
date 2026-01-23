@@ -38,13 +38,7 @@ export class UserLibrary {
   private libraryService = inject(LibraryService);
   private authService = inject(AuthService);
 
-  currentUser = this.authService.user;
-
-  constructor() {
-    effect(() => {
-      console.log('Current user:', this.currentUser());
-    });
-  }
+  public readonly currentUser = this.authService.user;
 
   statusTitles: Record<string, string> = {
     love: 'Loved',
@@ -52,10 +46,9 @@ export class UserLibrary {
     listened: 'Already discovered',
   };
 
-  // resource() creates a signal that handles async data fetching
   libraryResource = resource({
     loader: async () => {
-      // Convert the Observable returned by getUserLibrary() to a Promise
+      this.libraryService.userLibrary();
       const items = await firstValueFrom(this.libraryService.getUserLibrary());
       console.log(items);
       return items as UserLibraryItem[];
@@ -78,8 +71,6 @@ export class UserLibrary {
   }
 
   deleteItem(libraryItemId: string) {
-    this.libraryService.removeItem(libraryItemId).subscribe(() => {
-      this.libraryResource.reload();
-    });
+    this.libraryService.removeItem(libraryItemId).subscribe();
   }
 }
