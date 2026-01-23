@@ -1,4 +1,169 @@
 <div class="details-container">
+  @if (!albumDetails() && !artistDetails() && !trackDetails()) {
+  <div>
+    <p>Loading...</p>
+  </div>
+  } @if (type() === 'album' && albumDetails(); as album) {
+  <section>
+    @if (album.images[0]) {
+    <img [src]="album.images[0].url" [alt]="album.title" />
+    }
+    <div>
+      <h1>{{ album.title }}</h1>
+      <div class="action-buttons">
+        <button
+          (click)="addToLibrary(album.id, 'album', 'love')"
+          aria-label="Add to your library of loved album"
+          matTooltip="Add to loved albums"
+          [class.active-status]="existingItem()?.status === 'love'"
+        >
+          <mat-icon>{{
+            existingItem()?.status === 'love' ? 'favorite' : 'favorite_border'
+          }}</mat-icon>
+        </button>
+        <button
+          (click)="addToLibrary(album.id, 'album', 'explore')"
+          aria-label="Add to your library of albums you wish to explore"
+          matTooltip="Add to explore albums"
+          [class.active-status]="existingItem()?.status === 'explore'"
+        >
+          <mat-icon>{{
+            existingItem()?.status === 'explore' ? 'explore' : 'explore_border'
+          }}</mat-icon>
+        </button>
+        <button
+          (click)="addToLibrary(album.id, 'album', 'listened')"
+          aria-label="Add to your library of albums you have listened to"
+          matTooltip="Add to listened albums"
+          [class.active-status]="existingItem()?.status === 'listened'"
+        >
+          <mat-icon>{{
+            existingItem()?.status === 'listened' ? 'check_circle' : 'radio_button_unchecked'
+          }}</mat-icon>
+        </button>
+      </div>
+      <div [routerLink]="['/details', 'artist', album.artists[0].id]">
+        <h2>
+          {{ album.artists[0]?.name }}
+        </h2>
+      </div>
+      <p>Released {{ album.releaseDate }}</p>
+    </div>
+
+    <div class="tracklist">
+      @for (track of (album.tracks?.items || []); track track.id) {
+      <div [routerLink]="['/details', 'track', track.id]">
+        <p>{{ track.trackNumber }}. {{ track.title }}</p>
+      </div>
+      }
+    </div>
+  </section>
+
+  } @if (type() === 'artist' && artistDetails(); as artist) {
+  <section>
+    @if (artist.images[0]) {
+    <img [src]="artist.images[0].url" [alt]="artist.name" class="artist-img" />
+    }
+    <div>
+      <h1>{{ artist.name }}</h1>
+      <div class="action-buttons">
+        <button
+          (click)="addToLibrary(artist.id, 'artist', 'love')"
+          aria-label="Add to your library of loved artist"
+          matTooltip="Add to loved artists"
+          [class.active-status]="existingItem()?.status === 'love'"
+        >
+          <mat-icon>{{
+            existingItem()?.status === 'love' ? 'favorite' : 'favorite_border'
+          }}</mat-icon>
+        </button>
+        <button
+          (click)="addToLibrary(artist.id, 'artist', 'explore')"
+          aria-label="Add to your library of artists you wish to explore"
+          matTooltip="Add to explore artists"
+          [class.active-status]="existingItem()?.status === 'explore'"
+        >
+          <mat-icon>{{
+            existingItem()?.status === 'explore' ? 'explore' : 'explore_border'
+          }}</mat-icon>
+        </button>
+        <button
+          (click)="addToLibrary(artist.id, 'artist', 'listened')"
+          aria-label="Add to your library of artists you have listened to"
+          matTooltip="Add to listened artists"
+          [class.active-status]="existingItem()?.status === 'listened'"
+        >
+          <mat-icon>{{
+            existingItem()?.status === 'listened' ? 'check_circle' : 'check_circle_outline'
+          }}</mat-icon>
+        </button>
+      </div>
+      @if (artist.followers > 0) {
+      <strong>{{ artist.followers }}</strong> followers }
+    </div>
+
+    <div>
+      <h2>Discography</h2>
+      <div>
+        @for (album of (artistAlbums() || []); track album.id) {
+        <article [routerLink]="['/details', 'album', album.id]">
+          <div>
+            <img [src]="album.images[0]?.url" [alt]="album.title" class="discography-img" />
+          </div>
+          <h3>{{ album.title }}</h3>
+          <p>{{ album.releaseDate }}</p>
+        </article>
+        } @if (type() === 'artist' && artistAlbums().length === 0 && !detailsIsLoading()) {
+        <p>No albums found for this artist.</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  } @if (type() === 'track' && trackDetails(); as track) {
+  <section>
+    <div>
+      <h1>{{ track.title }}</h1>
+      <div class="action-buttons">
+        <button
+          (click)="addToLibrary(track.id, 'track', 'love')"
+          aria-label="Add to your library of loved track"
+          matTooltip="Add to loved tracks"
+          [class.active-status]="existingItem()?.status === 'love'"
+        >
+          <mat-icon>{{
+            existingItem()?.status === 'love' ? 'favorite' : 'favorite_border'
+          }}</mat-icon>
+        </button>
+        <button
+          (click)="addToLibrary(track.id, 'track', 'explore')"
+          aria-label="Add to your library of tracks you wish to explore"
+          matTooltip="Add to explore tracks"
+          [class.active-status]="existingItem()?.status === 'explore'"
+        >
+          <mat-icon>{{
+            existingItem()?.status === 'explore' ? 'explore' : 'explore_border'
+          }}</mat-icon>
+        </button>
+        <button
+          (click)="addToLibrary(track.id, 'track', 'listened')"
+          aria-label="Add to your library of tracks you have listened to"
+          matTooltip="Add to listened tracks"
+          [class.active-status]="existingItem()?.status === 'listened'"
+        >
+          <mat-icon>{{
+            existingItem()?.status === 'listened' ? 'check_circle' : 'radio_button_unchecked'
+          }}</mat-icon>
+        </button>
+      </div>
+      <img [src]="track.album?.imageUrl" [alt]="track.album?.title" />
+      <p>Appears on "{{ track.album?.title }}" by {{ track.artists[0]?.name }}</p>
+    </div>
+  </section>
+  }
+</div>
+
+<!-- <div class="details-container">
   @if (type() === 'album' && albumDetails(); as album) {
   <section>
     @if (album.images[0]) {
@@ -6,6 +171,29 @@
     }
     <div>
       <h1>{{ album.title }}</h1>
+      <span>
+        <button
+          (click)="addToLibrary(album.id, 'album', 'love')"
+          aria-label="Add to loved albums"
+          matTooltip="Add to loved albums"
+        >
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button
+          (click)="addToLibrary(album.id, 'album', 'explore')"
+          aria-label="Add to albums you wish to explore"
+          matTooltip="Add to explore albums"
+        >
+          <mat-icon>explore</mat-icon>
+        </button>
+        <button
+          (click)="addToLibrary(album.id, 'album', 'listened')"
+          aria-label="Add to albums you have listened to"
+          matTooltip="Add to listened albums"
+        >
+          <mat-icon>check_circle</mat-icon>
+        </button>
+      </span>
       <div [routerLink]="['/details', 'artist', album.artists[0].id]">
         <h2>
           {{ album.artists[0]?.name }}
@@ -65,4 +253,4 @@
     <p>Loading...</p>
   </div>
   }
-</div>
+</div> -->

@@ -15,4 +15,22 @@
     height: 200px;
     object-fit: cover;
   }
+
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+
+    button {
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &.active-status {
+        color: #c04b32;
+      }
+    }
+  }
 }
