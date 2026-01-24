@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { UserLibraryItem } from '../models/library';
-import { of, tap } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +19,10 @@ export class LibraryService {
     return this.http.get<UserLibraryItem[]>(`${this.apiUrl}/get`).pipe(
       tap((items) => {
         this._userLibrary.set(items);
+      }),
+      catchError((error) => {
+        console.error('Failed to fetch user library:', error);
+        throw error;
       })
     );
   }
@@ -33,6 +37,10 @@ export class LibraryService {
       .pipe(
         tap((response) => {
           this._userLibrary.update((items) => [...items, response.item]);
+        }),
+        catchError((error) => {
+          console.error('Failed to add item to library:', error);
+          throw error;
         })
       );
   }
@@ -48,6 +56,10 @@ export class LibraryService {
           this._userLibrary.update((items) =>
             items.map((item) => (item._id === libraryItemId ? response.updatedItem : item))
           );
+        }),
+        catchError((error) => {
+          console.error('Failed to update item status:', error);
+          throw error;
         })
       );
   }
@@ -60,6 +72,10 @@ export class LibraryService {
       .pipe(
         tap(() => {
           this._userLibrary.update((items) => items.filter((item) => item._id !== libraryItemId));
+        }),
+        catchError((error) => {
+          console.error('Failed to delete item:', error);
+          throw error;
         })
       );
   }

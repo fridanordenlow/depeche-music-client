@@ -40,6 +40,10 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.apiUrl}/register`, credentials).pipe(
       tap((response) => {
         this.saveSession(response);
+      }),
+      catchError((error) => {
+        console.error('Registration failed:', error);
+        throw error;
       })
     );
   }
@@ -48,6 +52,10 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
       tap((response) => {
         this.saveSession(response);
+      }),
+      catchError((error) => {
+        console.error('Login failed:', error);
+        throw error;
       })
     );
   }
