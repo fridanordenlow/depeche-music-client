@@ -4,10 +4,8 @@ import {
   computed,
   effect,
   inject,
-  resource,
   signal,
 } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
 import { LibraryService } from '../../services/library';
 import { UserLibraryItem } from '../../models/library';
 import { MatActionList, MatDivider, MatListItem } from '@angular/material/list';
@@ -15,8 +13,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AuthService } from '../../services/auth';
+import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-user-library',
@@ -25,6 +26,7 @@ import { AuthService } from '../../services/auth';
     MatButtonModule,
     MatCardModule,
     MatDivider,
+    MatDialogModule,
     MatIconModule,
     MatListItem,
     MatProgressSpinner,
@@ -37,8 +39,20 @@ import { AuthService } from '../../services/auth';
 export class UserLibrary {
   private libraryService = inject(LibraryService);
   private authService = inject(AuthService);
+  private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
 
   public readonly currentUser = this.authService.user;
+  public readonly isLoading = signal(true);
+
+  constructor() {
+    effect(() => {
+      this.libraryService.getUserLibrary().subscribe({
+        next: () => this.isLoading.set(false),
+        error: () => this.isLoading.set(false),
+      });
+    });
+  }
 
   statusTitles: Record<string, string> = {
     love: 'Loved',
@@ -46,20 +60,8 @@ export class UserLibrary {
     listened: 'Already discovered',
   };
 
-  libraryResource = resource({
-    loader: async () => {
-      this.libraryService.userLibrary();
-      const items = await firstValueFrom(this.libraryService.getUserLibrary());
-      console.log(items);
-      return items as UserLibraryItem[];
-    },
-  });
-
   private allItems = computed(() => {
-    if (this.libraryResource.error()) {
-      return [];
-    }
-    return this.libraryResource.value() ?? [];
+    return this.libraryService.userLibrary();
   });
 
   artists = computed(() => this.allItems().filter((item) => item.itemType === 'artist'));
@@ -71,6 +73,37 @@ export class UserLibrary {
   }
 
   deleteItem(libraryItemId: string) {
-    this.libraryService.removeItem(libraryItemId).subscribe();
+    if (!libraryItemId) {
+      console.error('Delete failed: No ID provided');
+      return;
+    }
+
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      width: '300px',
+      data: {
+        title: 'Remove from library?',
+        message: 'Are you sure you want to remove this item from your library?',
+        confirmText: 'Remove',
+        cancelText: 'Cancel',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.libraryService.removeItem(libraryItemId).subscribe({
+          next: () => {
+            this.snackBar.open('Removed from library', 'Close', {
+              duration: 3000,
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom',
+            });
+          },
+          error: (err) => {
+            console.error('Delete failed', err);
+            this.snackBar.open('Could not remove item. Try again later.', 'OK');
+          },
+        });
+      }
+    });
   }
 }

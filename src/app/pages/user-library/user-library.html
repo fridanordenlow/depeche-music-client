@@ -41,7 +41,7 @@
         <p class="empty-category-text">No tracks in this category yet.</p>
         }
       </section>
-      } } @else if (!libraryResource.isLoading()) {
+      } } @else if (!isLoading()) {
       <div class="empty-state">
         <mat-icon>music_off</mat-icon>
         <p>No tracks found in your library.</p>
@@ -78,7 +78,7 @@
         <p class="empty-category-text">No albums in this category yet.</p>
         }
       </section>
-      } } @else if (!libraryResource.isLoading()) {
+      } } @else if (!isLoading()) {
       <div class="empty-state">
         <mat-icon>album</mat-icon>
         <p>No albums found in your library.</p>
@@ -115,7 +115,7 @@
         <p class="empty-category-text">No artists in this category yet.</p>
         }
       </section>
-      } } @else if (!libraryResource.isLoading()) {
+      } } @else if (!isLoading()) {
       <div class="empty-state">
         <mat-icon>person</mat-icon>
         <p>No artists found in your library.</p>
@@ -124,7 +124,7 @@
     </mat-tab>
   </mat-tab-group>
 
-  @if (libraryResource.isLoading()) {
+  @if (isLoading()) {
   <div class="spinner-container">
     <mat-spinner diameter="50"></mat-spinner>
   </div>
