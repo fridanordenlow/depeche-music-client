@@ -24,12 +24,16 @@
         @let filteredTracks = getItemsByStatus(tracks(), status); @if (filteredTracks.length > 0) {
         <mat-action-list>
           @for (item of filteredTracks; track item._id) {
-          <mat-list-item>
+          <mat-list-item [routerLink]="['/details', item.itemType, item.spotifyItemId]">
             <img matListItemAvatar [src]="item.metadata.imageUrl || ''" alt="Album cover" />
             <span matListItemTitle>{{ item.metadata.title }}</span>
             <span matListItemLine>{{ item.metadata.artists?.[0]?.name }}</span>
             <div matListItemMeta>
-              <button mat-icon-button (click)="deleteItem(item._id)" type="button">
+              <button
+                mat-icon-button
+                (click)="deleteItem(item._id); $event.stopPropagation()"
+                type="button"
+              >
                 <mat-icon>delete_outline</mat-icon>
               </button>
             </div>
@@ -56,7 +60,7 @@
         @let filteredAlbums = getItemsByStatus(albums(), status); @if (filteredAlbums.length > 0) {
         <div class="simple-grid">
           @for (item of filteredAlbums; track item._id) {
-          <div class="grid-item">
+          <div class="grid-item" [routerLink]="['/details', item.itemType, item.spotifyItemId]">
             <img [src]="item.metadata.imageUrl || ''" alt="Album cover" />
             <div class="grid-info">
               <p class="album-title">{{ item.metadata.title }}</p>
@@ -64,7 +68,7 @@
               <button
                 mat-button
                 color="warn"
-                (click)="deleteItem(item._id)"
+                (click)="deleteItem(item._id); $event.stopPropagation()"
                 [aria-label]="'Delete ' + item.metadata.title + ' from library'"
                 type="button"
               >
@@ -94,14 +98,14 @@
         {
         <div class="simple-grid">
           @for (item of filteredArtists; track item._id) {
-          <div class="grid-item">
+          <div class="grid-item" [routerLink]="['/details', item.itemType, item.spotifyItemId]">
             <img [src]="item.metadata.imageUrl || ''" class="artist-img" alt="Artist photo" />
             <div class="grid-info">
               <strong>{{ item.metadata.name }}</strong>
               <button
                 mat-button
                 color="warn"
-                (click)="deleteItem(item._id)"
+                (click)="deleteItem(item._id); $event.stopPropagation()"
                 [aria-label]="'Delete ' + item.metadata.name + ' from library'"
                 type="button"
               >

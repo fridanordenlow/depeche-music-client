@@ -6,6 +6,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { LibraryService } from '../../services/library';
 import { UserLibraryItem } from '../../models/library';
 import { MatActionList, MatDivider, MatListItem } from '@angular/material/list';
@@ -31,6 +32,7 @@ import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
     MatListItem,
     MatProgressSpinner,
     MatTabsModule,
+    RouterLink,
   ],
   templateUrl: './user-library.html',
   styleUrl: './user-library.scss',
