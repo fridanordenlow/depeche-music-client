@@ -56,7 +56,11 @@
     <mat-tab label="Albums">
       @if (albums().length > 0) { @for (status of ['love', 'explore', 'listened']; track status) {
       <section>
-        <h2 class="status-header">{{ statusTitles[status] }}</h2>
+        <h2 class="status-header">
+          @if (status === 'love') { <mat-icon>favorite</mat-icon> } @else if (status === 'explore')
+          { <mat-icon>explore</mat-icon> } @else { <mat-icon>check_circle</mat-icon> }
+          {{ statusTitles[status] }}
+        </h2>
         @let filteredAlbums = getItemsByStatus(albums(), status); @if (filteredAlbums.length > 0) {
         <div class="simple-grid">
           @for (item of filteredAlbums; track item._id) {
@@ -93,7 +97,11 @@
     <mat-tab label="Artists">
       @if (artists().length > 0) { @for (status of ['love', 'explore', 'listened']; track status) {
       <section>
-        <h2 class="status-header">{{ statusTitles[status] }}</h2>
+        <h2 class="status-header">
+          @if (status === 'love') { <mat-icon>favorite</mat-icon> } @else if (status === 'explore')
+          { <mat-icon>explore</mat-icon> } @else { <mat-icon>check_circle</mat-icon> }
+          {{ statusTitles[status] }}
+        </h2>
         @let filteredArtists = getItemsByStatus(artists(), status); @if (filteredArtists.length > 0)
         {
         <div class="simple-grid">
