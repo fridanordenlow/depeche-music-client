@@ -1,0 +1,18 @@
+<section class="new-releases-section">
+  <h1>New Releases</h1>
+  @if (featuredNewReleases(); as releases) {
+  <div class="releases-grid">
+    @for (album of featuredNewReleases(); track album.id) {
+    <article class="release-card" [routerLink]="['/details', 'album', album.id]">
+      <img [src]="album.images[0]?.url" [alt]="album.title" />
+      <div>
+        <h3>{{ album.title }}</h3>
+        <p>{{ getArtistNames(album) }}</p>
+      </div>
+    </article>
+    }
+  </div>
+  } @else {
+  <p>Loading...</p>
+  }
+</section>
