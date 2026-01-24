@@ -4,7 +4,7 @@ import { Header } from './layout/header/header';
 import { Footer } from './layout/footer/footer';
 import { AuthService } from './services/auth';
 import { LibraryService } from './services/library';
-import { SearchBar } from './shared/search-bar/search-bar';
+import { SearchBar } from './components/search-bar/search-bar';
 
 @Component({
   selector: 'app-root',
