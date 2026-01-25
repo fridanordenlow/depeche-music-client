@@ -107,7 +107,9 @@ export class Details {
           this.libraryService.removeItem(existing._id).subscribe({
             next: () => this.snackBar.open('Removed from library', 'Close', { duration: 3000 }),
             error: (err) => {
-              this.snackBar.open('Could not remove item. Try again later.', 'OK');
+              this.snackBar.open('Could not remove item. Try again later.', 'OK', {
+                duration: 3000,
+              });
               console.error('Removal error:', err);
             },
           });
