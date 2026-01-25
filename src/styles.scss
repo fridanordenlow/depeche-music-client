@@ -88,3 +88,12 @@ main {
   padding: 0 1.5rem;
   width: 100%;
 }
+
+// Snackbar styling
+::ng-deep .mdc-snackbar__surface {
+  background-color: #323232 !important;
+}
+
+::ng-deep .mat-mdc-snack-bar-label {
+  color: #ffffff !important;
+}
