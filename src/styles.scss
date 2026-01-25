@@ -14,6 +14,8 @@
 
 html {
   height: 100%;
+  // Force light mode globally
+  color-scheme: light !important;
 
   @include mat.theme(
     (
@@ -42,10 +44,8 @@ html {
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
+  // Force light color theme only - dark mode disabled
+  color-scheme: light !important;
 
   // Reset the user agent margin.
   margin: 0;
@@ -58,6 +58,14 @@ body {
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+// Override any system dark mode preferences - force light mode everywhere
+@media (prefers-color-scheme: dark) {
+  html,
+  body {
+    color-scheme: light !important;
+  }
 }
 
 .site-wrapper {
