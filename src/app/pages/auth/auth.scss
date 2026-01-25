@@ -19,6 +19,11 @@
   .error-message {
     color: #1a1b1f;
     margin-bottom: 0;
+    text-wrap: wrap;
+
+    @media (max-width: 480px) {
+      font-size: 0.98rem;
+    }
   }
 
   .auth-card {
@@ -30,7 +35,12 @@
 
   .full-width {
     width: 100%;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  ::ng-deep .mat-mdc-form-field-error {
+    font-size: 0.75rem !important;
   }
 
   .submit-btn {
@@ -39,6 +49,12 @@
     display: block;
     margin: 16px auto 0;
     border-radius: 4px;
+
+    &:disabled {
+      background-color: #d0d0d0 !important;
+      color: #818181 !important;
+      opacity: 1;
+    }
   }
 
   .auth-footer {
