@@ -1,6 +1,8 @@
 <section class="new-releases-section">
   <h1>New Releases</h1>
-  @if (featuredNewReleases(); as releases) {
+  @if (isLoading()) {
+  <app-loading></app-loading>
+  } @else if (featuredNewReleases(); as releases) {
   <div class="releases-grid">
     @for (album of featuredNewReleases(); track album.id) {
     <article class="release-card" [routerLink]="['/details', 'album', album.id]">
@@ -12,7 +14,5 @@
     </article>
     }
   </div>
-  } @else {
-  <p>Loading...</p>
   }
 </section>

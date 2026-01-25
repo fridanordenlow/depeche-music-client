@@ -13,12 +13,12 @@ import { MatActionList, MatDivider, MatListItem } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AuthService } from '../../services/auth';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
+import { LoadingComponent } from '../../shared/loading/loading';
 
 @Component({
   selector: 'app-user-library',
@@ -30,9 +30,9 @@ import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
     MatDialogModule,
     MatIconModule,
     MatListItem,
-    MatProgressSpinner,
     MatTabsModule,
     RouterLink,
+    LoadingComponent,
   ],
   templateUrl: './user-library.html',
   styleUrl: './user-library.scss',

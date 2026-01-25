@@ -1,13 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { SpotifyService } from '../../services/spotify';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Album } from '../../models/music';
+import { LoadingComponent } from '../../shared/loading/loading';
 
 @Component({
   selector: 'app-new-releases',
-  imports: [RouterLink],
+  imports: [RouterLink, LoadingComponent],
   templateUrl: './new-releases.html',
   styleUrl: './new-releases.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,7 +16,9 @@ import { Album } from '../../models/music';
 export class NewReleases {
   private spotifyService = inject(SpotifyService);
 
-  private allNewReleases = toSignal(this.spotifyService.getNewReleases());
+  private allNewReleases = toSignal(this.spotifyService.getNewReleases(), { initialValue: null });
+
+  isLoading = computed(() => !this.allNewReleases());
 
   featuredNewReleases = computed(() => {
     const data = this.allNewReleases();
