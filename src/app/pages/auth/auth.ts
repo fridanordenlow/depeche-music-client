@@ -63,7 +63,15 @@ export class Auth {
 
     this.errorMessage.set(null);
 
-    const credentials = this.authForm.getRawValue() as AuthCredentials;
+    // const credentials = this.authForm.getRawValue() as AuthCredentials;
+
+    const rawValues = this.authForm.getRawValue();
+    const credentials: AuthCredentials = {
+      ...rawValues,
+      email: rawValues.email?.trim().toLowerCase() ?? '',
+      password: rawValues.password ?? '',
+      username: rawValues.username ?? undefined,
+    };
 
     const request$ = this.isLoginMode()
       ? this.authService.login(credentials)
