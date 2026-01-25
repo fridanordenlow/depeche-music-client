@@ -3,11 +3,20 @@
   align-items: center;
   justify-content: space-between;
   padding: 24px; // Move padding to general style level later
+
+  .logo-link img {
+    height: 75px;
+    width: auto;
+  }
 }
 
-.logo-link img {
-  height: 75px;
-  width: auto;
+@media (max-width: 480px) {
+  .header-content {
+    height: 80px;
+    .logo-link img {
+      height: 40px;
+    }
+  }
 }
 
 .desktop-menu {
@@ -37,27 +46,23 @@
 }
 
 .menu-trigger {
-  padding: 8px;
-  min-width: unset;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: none;
+  border: none;
+  cursor: pointer;
   color: inherit;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  position: relative;
+  z-index: 101;
 
-  .menu-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    line-height: 1;
-
-    mat-icon {
-      font-size: 28px;
-      width: 28px;
-      height: 28px;
-    }
-
-    .menu-text {
-      font-size: 10px;
-      font-weight: bold;
-      margin-top: 2px;
-    }
+  mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
   }
 }
 
@@ -77,14 +82,61 @@
   .mobile-menu {
     display: block;
     padding-top: 0.5rem;
+    position: relative;
   }
-}
 
-@media (max-width: 480px) {
-  .header-content {
-    height: 70px;
-    .logo-link img {
-      height: 40px;
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  .mobile-menu-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 70%;
+    max-width: 280px;
+    background-color: var(--mat-sys-surface);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+    overflow-y: auto;
+    animation: slideIn 0.3s ease-out;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
 }

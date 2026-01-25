@@ -14,34 +14,43 @@
   </nav>
 
   <div class="mobile-menu">
-    <button mat-button [matMenuTriggerFor]="mainMenu" class="menu-trigger">
-      <div class="menu-content">
-        <mat-icon>menu</mat-icon>
-        <span class="menu-text">MENY</span>
-      </div>
+    <button
+      (click)="toggleMenu()"
+      class="menu-trigger"
+      [attr.aria-label]="isMenuOpen() ? 'Close menu' : 'Open menu'"
+      [attr.aria-expanded]="isMenuOpen()"
+      aria-controls="mobile-menu-panel"
+    >
+      @if (isMenuOpen()) {
+      <mat-icon>close</mat-icon>
+      } @else {
+      <mat-icon>menu</mat-icon>
+      }
     </button>
 
-    <mat-menu #mainMenu="matMenu">
-      <button mat-menu-item [routerLink]="['/']">
+    @if (isMenuOpen()) {
+    <div class="mobile-menu-overlay" (click)="closeMenu()"></div>
+    <nav class="mobile-menu-panel" id="mobile-menu-panel">
+      <a mat-menu-item [routerLink]="['/']" (click)="closeMenu()">
         <mat-icon>home</mat-icon>
         <span>Home</span>
-      </button>
-      <button mat-menu-item [routerLink]="['/library']">
+      </a>
+      <a mat-menu-item [routerLink]="['/library']" (click)="closeMenu()">
         <mat-icon>library_music</mat-icon>
         <span>My Library</span>
-      </button>
-      <mat-divider></mat-divider>
+      </a>
       @if (auth.isAuthenticated()) {
-      <button mat-menu-item (click)="onLogout()">
+      <a mat-menu-item (click)="onLogout()">
         <mat-icon>logout</mat-icon>
         <span>Logout</span>
-      </button>
+      </a>
       } @else {
-      <button mat-menu-item (click)="onLogin()">
+      <a mat-menu-item (click)="onLogin()">
         <mat-icon>login</mat-icon>
         <span>Login</span>
-      </button>
+      </a>
       }
-    </mat-menu>
+    </nav>
+    }
   </div>
 </header>
