@@ -109,8 +109,10 @@
     flex-direction: column;
     padding: 1rem 0;
     overflow-y: auto;
+    overflow-x: hidden;
     animation: slideIn 0.3s ease-out;
     box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+    will-change: transform;
 
     a {
       display: flex;
