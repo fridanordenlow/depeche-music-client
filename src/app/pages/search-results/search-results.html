@@ -11,57 +11,69 @@
     <mat-icon>error_outline</mat-icon>
     <p>{{ message }}</p>
   </div>
-  } @if (searchResults(); as results) {
+  } @if (searchResults(); as results) { @if (results.artists.items.length ||
+  results.albums.items.length || results.tracks.items.length) {
   <div class="results-grid">
     @if (results.artists.items.length) {
-    <mat-nav-list>
-      <h3 mat-subheader>Artists</h3>
+    <div class="result-section">
+      <h3 class="section-header">Artists</h3>
       @for (artist of results.artists.items; track artist.id) {
-      <a mat-list-item [routerLink]="['/details', 'artist', artist.id]">
+      <a class="result-item" [routerLink]="['/details', 'artist', artist.id]">
         @if (artist.images.length) {
-        <img matListItemAvatar [src]="artist.images[2]?.url" />
+        <img class="result-image circle" [src]="artist.images[2]?.url" />
         } @else {
-        <mat-icon matListItemAvatar>person</mat-icon>
+        <mat-icon class="result-icon">person</mat-icon>
         }
-        <span matListItemTitle>{{ artist.name }}</span>
+        <span class="result-title">{{ artist.name }}</span>
       </a>
       }
-    </mat-nav-list>
+    </div>
     } @if (results.albums.items.length) {
-    <mat-nav-list>
-      <h3 mat-subheader>Releases</h3>
+    <div class="result-section">
+      <h3 class="section-header">Releases</h3>
       @for (album of results.albums.items; track album.id) {
-      <a mat-list-item [routerLink]="['/details', 'album', album.id]">
+      <a class="result-item" [routerLink]="['/details', 'album', album.id]">
         @if (album.images.length) {
-        <img matListItemAvatar [src]="album.images[2]?.url" />
+        <img class="result-image" [src]="album.images[2]?.url" />
         } @else {
-        <mat-icon matListItemAvatar>album</mat-icon>
+        <mat-icon class="result-icon">album</mat-icon>
         }
-        <span matListItemTitle>{{ album.title }}</span>
-        <span matListItemLine>{{ album.artists[0].name }}</span>
+        <div class="result-info">
+          <span class="result-title">{{ album.title }}</span>
+          <span class="result-subtitle">{{ album.artists[0].name }}</span>
+        </div>
       </a>
       }
-    </mat-nav-list>
+    </div>
     } @if (results.tracks.items.length) {
-    <mat-nav-list>
-      <h3 mat-subheader>Tracks</h3>
+    <div class="result-section">
+      <h3 class="section-header">Tracks</h3>
       @for (track of results.tracks.items; track track.id) {
-      <a mat-list-item [routerLink]="['/details', 'track', track.id]">
+      <a class="result-item" [routerLink]="['/details', 'track', track.id]">
         @if (track.album?.imageUrl) {
-        <img matListItemAvatar [src]="track.album?.imageUrl" alt="{{ track.album?.title }}" />
+        <img class="result-image" [src]="track.album?.imageUrl" alt="{{ track.album?.title }}" />
         } @else {
-        <mat-icon matListItemIcon>music_note</mat-icon>
+        <mat-icon class="result-icon">music_note</mat-icon>
         }
-
-        <span matListItemTitle>{{ track.title }}</span>
-        <span matListItemLine>
-          {{ track.artists[0].name }}
-          @if (track.album) { • {{ track.album.title }} }
-        </span>
+        <div class="result-info">
+          <span class="result-title">{{ track.title }}</span>
+          <span class="result-subtitle">
+            {{ track.artists[0].name }}
+            @if (track.album) { • {{ track.album.title }} }
+          </span>
+        </div>
       </a>
       }
-    </mat-nav-list>
+    </div>
     }
+  </div>
+  } @else {
+  <div class="no-results">
+    <p>No results found for "{{ currentQuery() }}"</p>
+  </div>
+  } } @else {
+  <div class="no-results">
+    <p>No results found for "{{ currentQuery() }}"</p>
   </div>
   }
 </div>

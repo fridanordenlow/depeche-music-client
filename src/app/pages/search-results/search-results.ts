@@ -19,7 +19,6 @@ import { ApiErrorResponse } from '../../models/error';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LoadingComponent } from '../../shared/loading/loading';
 
@@ -30,7 +29,6 @@ import { LoadingComponent } from '../../shared/loading/loading';
     RouterLink,
     MatFormFieldModule,
     MatInputModule,
-    MatListModule,
     MatIconModule,
     LoadingComponent,
   ],
