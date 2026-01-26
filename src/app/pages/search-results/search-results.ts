@@ -20,8 +20,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { LoadingComponent } from '../../shared/loading/loading';
 
 @Component({
   selector: 'app-search-results',
@@ -32,7 +32,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
     MatInputModule,
     MatListModule,
     MatIconModule,
-    MatProgressSpinnerModule,
+    LoadingComponent,
   ],
   templateUrl: './search-results.html',
   styleUrl: './search-results.scss',

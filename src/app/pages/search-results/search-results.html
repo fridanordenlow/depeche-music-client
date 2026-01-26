@@ -5,9 +5,7 @@
     >"
   </h1>
   } @if (isLoading()) {
-  <div class="status-container">
-    <mat-spinner diameter="40"></mat-spinner>
-  </div>
+  <app-loading></app-loading>
   } @if (errorMessage(); as message) {
   <div class="error-container">
     <mat-icon>error_outline</mat-icon>
