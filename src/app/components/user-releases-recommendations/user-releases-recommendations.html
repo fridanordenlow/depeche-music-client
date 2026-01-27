@@ -1,0 +1,22 @@
+<section class="user-releases-section">
+  <h2>User Recommended Releases</h2>
+  @if (isLoading()) {
+  <app-loading></app-loading>
+  } @else if (albumRecommendations().length > 0) {
+  <div class="releases-grid">
+    @for (rec of albumRecommendations(); track rec._id) {
+    <article class="release-card" [routerLink]="['/details', 'album', rec.spotifyId]">
+      <img [src]="rec.metadata?.imageUrl" [alt]="rec.metadata?.title" />
+      <div>
+        <h3>{{ rec.metadata?.title }}</h3>
+        <p>{{ rec.metadata?.artists?.[0]?.name }}</p>
+      </div>
+    </article>
+    }
+  </div>
+  } @else {
+  <div class="empty-state">
+    <p>No user recommendations available.</p>
+  </div>
+  }
+</section>
