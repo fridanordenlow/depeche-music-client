@@ -66,7 +66,7 @@
     // color: var(--mat-sys-primary);
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin: 32px 0 16px;
+    margin: 32px 0;
     border-bottom: 1px solid #e5e5e5;
     padding-bottom: 8px;
 
@@ -108,6 +108,12 @@
       display: flex;
       align-items: center;
     }
+
+    .delete-button {
+      mat-icon {
+        color: #666;
+      }
+    }
   }
 
   mat-divider {
@@ -125,14 +131,16 @@
   .grid-item {
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.2s ease;
 
-    // button {
-    //   padding: 0;
-    //   align-self: flex-start;
-    // }
+    &:hover {
+      transform: translateY(-4px);
+    }
 
     img {
       width: 100%;
+      // max-width: 150px;
       aspect-ratio: 1/1;
       object-fit: cover;
       margin-bottom: 12px;
@@ -146,7 +154,12 @@
     .grid-info {
       display: flex;
       flex-direction: column;
-      margin-bottom: 8px;
+      flex: 1;
+
+      .artist-name {
+        font-weight: 700;
+        align-self: center;
+      }
 
       .album-title {
         font-weight: 700;
@@ -156,6 +169,11 @@
         color: #666;
         font-size: 0.85rem;
       }
+    }
+
+    button {
+      align-self: flex-end;
+      margin-top: 4px;
     }
   }
 
