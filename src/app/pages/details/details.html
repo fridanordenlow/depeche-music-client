@@ -52,6 +52,18 @@
     </div>
   </header>
 
+  <div class="rec-text recommend-link cta-block">
+    <p>
+      Would you like to recommend this {{ type() }}? Write a review now!
+      <a
+        [routerLink]="['/recommendations/new', type(), id()]"
+        [attr.aria-label]="'Write a recommendation for this ' + type()"
+      >
+        Let's go!
+      </a>
+    </p>
+  </div>
+
   <div class="track-list">
     @for (track of (album.tracks?.items || []); track track.id) {
     <div class="track-row" [routerLink]="['/details', 'track', track.id]">
@@ -103,6 +115,18 @@
       }
     </div>
   </header>
+
+  <div class="rec-text recommend-link cta-block">
+    <p>
+      Would you like to recommend this {{ type() }}? Write a review now!
+      <a
+        [routerLink]="['/recommendations/new', type(), id()]"
+        [attr.aria-label]="'Write a recommendation for this ' + type()"
+      >
+        Let's go!
+      </a>
+    </p>
+  </div>
 
   <div class="discography-section">
     <h2>Discography</h2>
@@ -165,5 +189,17 @@
       </p>
     </div>
   </header>
+
+  <div class="rec-text recommend-link cta-block">
+    <p>
+      Would you like to recommend this {{ type() }}? Write a review now!
+      <a
+        [routerLink]="['/recommendations/new', type(), id()]"
+        [attr.aria-label]="'Write a recommendation for this ' + type()"
+      >
+        Let's go!
+      </a>
+    </p>
+  </div>
   }
 </div>

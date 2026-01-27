@@ -45,10 +45,25 @@
           text-decoration: underline;
         }
       }
+
       .meta-text {
         margin-top: 1rem;
         opacity: 0.8;
       }
+    }
+  }
+
+  .rec-text {
+    margin-top: 2rem;
+    // opacity: 0.8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    a {
+      color: #c04b32;
+      font-weight: 600;
+      text-decoration: underline;
     }
   }
 
@@ -83,7 +98,7 @@
 
   .track-list {
     margin-top: 1rem;
-    max-width: 600px; // Begränsad för att slippa tennisbolls-effekt på desktop
+    max-width: 600px;
 
     .track-row {
       display: flex;
