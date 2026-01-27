@@ -1,12 +1,22 @@
 <div class="library-container">
+  <div class="library-header-wrapper">
+    <mat-icon>library_music</mat-icon>
+    <!-- <img src="dm-icon.svg" alt="Depeche Music icon" /> -->
+    <h1>My Library</h1>
+  </div>
   @if (currentUser(); as user) {
   <div class="user-greeting">
-    <h2>Welcome, {{ user.username }}!</h2>
-    <p>
-      See your collection of artist, albums and tracks below. Continue building your library by
-      exploring new releases, user recommendations and search for music. There are three categories
-      you can use to organize your library:
-    </p>
+    <div>
+      <h2>
+        Welcome, <span>{{ user.username }}</span
+        >!
+      </h2>
+      <p>
+        See your collection of artist, albums and tracks below. Continue building your library by
+        exploring new releases, user recommendations and search for music. There are three
+        categories you can use to add music to your library:
+      </p>
+    </div>
     <div class="icon-legend">
       <span><mat-icon>favorite</mat-icon> Your favorite music</span>
       <span><mat-icon>explore</mat-icon> Music you wish to explore</span>
@@ -14,8 +24,6 @@
     </div>
   </div>
   }
-
-  <h1 class="library-header">My Library</h1>
 
   <mat-tab-group animationDuration="0ms">
     <mat-tab label="Tracks">
