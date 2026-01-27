@@ -1,20 +1,17 @@
 .details-container {
   display: flex;
   flex-direction: column;
-  margin-top: 16px;
 
   .hero-section {
     display: flex;
     flex-direction: column;
     gap: 2rem;
     align-items: flex-start;
-    margin-bottom: 1rem;
 
     @media (min-width: 550px) {
       flex-direction: row;
       align-items: flex-end;
       text-align: left;
-      margin-bottom: 2rem;
     }
 
     .main-img {
