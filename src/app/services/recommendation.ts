@@ -38,4 +38,22 @@ export class RecommendationService {
       })
     );
   }
+
+  createRecommendation(payload: {
+    spotifyId: string;
+    type: 'album' | 'artist' | 'track';
+    review: string;
+    isFeatured?: boolean;
+  }) {
+    return this.http.post<UserRecommendation>(`${this.apiUrl}`, payload).pipe(
+      tap((created) => {
+        // Optionally cache it locally for UX; keep minimal for now
+        this._userRecommendations.set([...this._userRecommendations(), created]);
+      }),
+      catchError((error) => {
+        console.error('Failed to create recommendation:', error);
+        throw error;
+      })
+    );
+  }
 }
