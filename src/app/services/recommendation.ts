@@ -43,9 +43,8 @@ export class RecommendationService {
     spotifyId: string;
     type: 'album' | 'artist' | 'track';
     review: string;
-    isFeatured?: boolean;
   }) {
-    return this.http.post<UserRecommendation>(`${this.apiUrl}`, payload).pipe(
+    return this.http.post<UserRecommendation>(`${this.apiUrl}/add`, payload).pipe(
       tap((created) => {
         // Optionally cache it locally for UX; keep minimal for now
         this._userRecommendations.set([...this._userRecommendations(), created]);
