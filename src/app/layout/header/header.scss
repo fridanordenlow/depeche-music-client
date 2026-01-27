@@ -2,20 +2,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px; // Move padding to general style level later
+  padding-top: clamp(12px, 2vw, 18px);
+  padding-bottom: clamp(12px, 2vw, 18px);
 
   .logo-link img {
-    height: 75px;
+    height: clamp(45px, 8vw, 75px);
     width: auto;
-  }
-}
-
-@media (max-width: 480px) {
-  .header-content {
-    height: 80px;
-    .logo-link img {
-      height: 40px;
-    }
   }
 }
 
@@ -67,12 +59,7 @@
 }
 
 @media (max-width: 1024px) {
-  .logo-link img {
-    height: 55px;
-  }
-  .header-content {
-    height: 100px;
-  }
+  /* Logo scales via clamp; no fixed header height */
 }
 
 @media (max-width: 768px) {
@@ -81,7 +68,6 @@
   }
   .mobile-menu {
     display: block;
-    padding-top: 0.5rem;
     position: relative;
   }
 
