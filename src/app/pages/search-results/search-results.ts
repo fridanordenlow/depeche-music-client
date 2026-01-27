@@ -20,7 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { LoadingComponent } from '../../shared/loading/loading';
+import { Loading } from '../../shared/loading/loading';
 
 @Component({
   selector: 'app-search-results',
@@ -30,7 +30,7 @@ import { LoadingComponent } from '../../shared/loading/loading';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    LoadingComponent,
+    Loading,
   ],
   templateUrl: './search-results.html',
   styleUrl: './search-results.scss',

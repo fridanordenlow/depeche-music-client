@@ -19,6 +19,6 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoadingComponent {
+export class Loading {
   diameter = input(50);
 }

@@ -4,11 +4,11 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Album } from '../../models/music';
-import { LoadingComponent } from '../../shared/loading/loading';
+import { Loading } from '../../shared/loading/loading';
 
 @Component({
   selector: 'app-new-releases',
-  imports: [RouterLink, LoadingComponent],
+  imports: [RouterLink, Loading],
   templateUrl: './new-releases.html',
   styleUrl: './new-releases.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -18,7 +18,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AuthService } from '../../services/auth';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
-import { LoadingComponent } from '../../shared/loading/loading';
+import { Loading } from '../../shared/loading/loading';
 
 @Component({
   selector: 'app-user-library',
@@ -32,7 +32,7 @@ import { LoadingComponent } from '../../shared/loading/loading';
     MatListItem,
     MatTabsModule,
     RouterLink,
-    LoadingComponent,
+    Loading,
   ],
   templateUrl: './user-library.html',
   styleUrl: './user-library.scss',
