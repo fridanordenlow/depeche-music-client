@@ -32,26 +32,31 @@
     </div>
     }
   </div>
-  <form [formGroup]="form" (ngSubmit)="submit()" class="rec-form">
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Your review</mat-label>
-      <textarea
-        matInput
-        formControlName="review"
-        rows="8"
-        placeholder="Share why you recommend this..."
-      ></textarea>
-      @if (form.get('review')?.invalid && form.get('review')?.touched) {
-      <mat-error>Review length is required to be at least 10 characters long</mat-error>
-      }
-    </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Your review</mat-label>
+    <textarea
+      matInput
+      [value]="review()"
+      (input)="review.set($any($event.target).value)"
+      [errorStateMatcher]="errorStateMatcher"
+      rows="8"
+      placeholder="Share why you recommend this..."
+    ></textarea>
+    @if (review().length > 0 && !isValid()) {
+    <mat-error>Review must be at least 10 characters</mat-error>
+    }
+  </mat-form-field>
 
-    <div class="actions">
-      <button mat-button color="primary" [routerLink]="['/library']" type="button">Cancel</button>
-      <button mat-flat-button color="accent" [disabled]="form.invalid || submitting" type="submit">
-        <mat-icon>send</mat-icon>
-        Submit
-      </button>
-    </div>
-  </form>
+  <div class="actions">
+    <button mat-button color="primary" (click)="cancel()" type="button">Cancel</button>
+    <button
+      mat-flat-button
+      color="accent"
+      [disabled]="!isValid() || isSubmitting()"
+      (click)="submit()"
+    >
+      <mat-icon>send</mat-icon>
+      Submit
+    </button>
+  </div>
 </div>
