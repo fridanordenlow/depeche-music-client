@@ -1,0 +1,57 @@
+<div class="rec-container">
+  <div class="rec-header">
+    <h1>Write a recommendation</h1>
+    <!-- <mat-icon>rate_review</mat-icon> -->
+  </div>
+  <div class="rec-content">
+    @if (albumDetails(); as album) {
+    <div class="item-preview">
+      <img [src]="album.images[0]?.url" [alt]="album.title" />
+      <div class="info">
+        <span class="type-label">Album</span>
+        <h2>{{ album.title }}</h2>
+        <p class="meta-text">{{ album.artists[0]?.name }}</p>
+      </div>
+    </div>
+    } @else if (artistDetails(); as artist) {
+    <div class="item-preview">
+      <img [src]="artist.images[0]?.url" [alt]="artist.name" class="circle" />
+      <div class="info">
+        <span class="type-label">Artist</span>
+        <h2>{{ artist.name }}</h2>
+      </div>
+    </div>
+    } @else if (trackDetails(); as track) {
+    <div class="item-preview">
+      <img [src]="track.album?.imageUrl" [alt]="track.album?.title" />
+      <div class="info">
+        <span class="type-label">Track</span>
+        <h2>{{ track.title }}</h2>
+        <p class="meta-text">{{ track.artists[0]?.name }}</p>
+      </div>
+    </div>
+    }
+  </div>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="rec-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Your review</mat-label>
+      <textarea
+        matInput
+        formControlName="review"
+        rows="8"
+        placeholder="Share why you recommend this..."
+      ></textarea>
+      @if (form.get('review')?.invalid && form.get('review')?.touched) {
+      <mat-error>Review length is required to be at least 10 characters long</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="actions">
+      <button mat-button color="primary" [routerLink]="['/library']" type="button">Cancel</button>
+      <button mat-flat-button color="accent" [disabled]="form.invalid || submitting" type="submit">
+        <mat-icon>send</mat-icon>
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
