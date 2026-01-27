@@ -85,20 +85,18 @@ export class RecommendationForm {
       this.submitting = false;
       return;
     }
-    this.service
-      .createRecommendation({ type, spotifyId, review: review!, isFeatured: false })
-      .subscribe({
-        next: () => {
-          this.snackBar.open('Recommendation submitted!', 'Close', { duration: 2500 });
-          this.form.reset({ review: '' });
-          this.submitting = false;
-          // Navigate to library or stay here
-          // this.router.navigate(['/library']);
-        },
-        error: () => {
-          this.snackBar.open('Failed to submit recommendation', 'Close', { duration: 3000 });
-          this.submitting = false;
-        },
-      });
+    this.service.createRecommendation({ type, spotifyId, review: review! }).subscribe({
+      next: () => {
+        this.snackBar.open('Recommendation submitted!', 'Close', { duration: 2500 });
+        this.form.reset({ review: '' });
+        this.submitting = false;
+        // Navigate to library of user recommendations or go back to details page?
+        // this.router.navigate(['/library']);
+      },
+      error: () => {
+        this.snackBar.open('Failed to submit recommendation', 'Close', { duration: 3000 });
+        this.submitting = false;
+      },
+    });
   }
 }
