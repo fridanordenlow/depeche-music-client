@@ -67,8 +67,8 @@
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 1.5px;
-    text-transform: uppercase;
     opacity: 0.7;
+    text-transform: uppercase;
   }
 
   h2 {
@@ -78,6 +78,7 @@
     line-height: 1.2;
   }
 
+  // TODO: Move meta-text to general styles
   .meta-text {
     font-size: clamp(0.875rem, 1.5vw, 1rem);
     color: #666;
