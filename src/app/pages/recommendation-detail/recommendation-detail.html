@@ -1,0 +1,39 @@
+<div class="rec-detail-container">
+  @if (isLoading()) {
+  <app-loading></app-loading>
+  } @else if (recommendation(); as rec) {
+  <header class="hero-section">
+    <div class="image-wrapper">
+      @if (rec.metadata?.imageUrl) {
+      <img [src]="rec.metadata?.imageUrl" [alt]="rec.metadata?.title || 'Item'" class="main-img" />
+      }
+    </div>
+    <div class="info-wrapper">
+      <span class="type-label">{{ rec.type }}</span>
+      <h1>{{ rec.metadata?.title }}</h1>
+      @if (rec.metadata?.artists?.[0]?.name) {
+      <p class="meta-text">{{ rec.metadata?.artists?.[0]?.name }}</p>
+      }
+    </div>
+  </header>
+
+  <div class="review-section">
+    <div class="review-header">
+      <div class="user-info">
+        @if (rec.user) {
+        <h2>
+          Review by <span>{{ rec.user.username }}</span>
+        </h2>
+        } @if (rec.createdAt) {
+        <p class="date">{{ rec.createdAt | date : 'longDate' }}</p>
+        }
+      </div>
+    </div>
+    <p class="review-text">{{ rec.review || '' }}</p>
+  </div>
+  <a [routerLink]="['/details', rec.type, rec.spotifyId]" class="view-details-link">
+    View full {{ rec.type }} details
+    <mat-icon>arrow_forward</mat-icon>
+  </a>
+  }
+</div>
