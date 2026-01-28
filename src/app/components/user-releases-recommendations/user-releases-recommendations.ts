@@ -16,12 +16,13 @@ export class UserReleasesRecommendations {
   private recommendationService = inject(RecommendationService);
 
   private allRecommendations = toSignal(this.recommendationService.getPublicRecommendations(), {
-    initialValue: [],
+    initialValue: null,
   });
 
   isLoading = computed(() => !this.allRecommendations());
 
   albumRecommendations = computed(() => {
-    return this.allRecommendations().filter((rec) => rec.type === 'album');
+    const recs = this.allRecommendations();
+    return recs ? recs.filter((rec) => rec.type === 'album') : [];
   });
 }
