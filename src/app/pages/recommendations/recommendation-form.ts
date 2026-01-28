@@ -23,14 +23,7 @@ import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-recommendation-form',
-  imports: [
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatSnackBarModule,
-    RouterLink,
-  ],
+  imports: [MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSnackBarModule],
   templateUrl: './recommendation-form.html',
   styleUrl: './recommendation-form.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
