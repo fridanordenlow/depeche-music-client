@@ -5,7 +5,7 @@
   } @else if (albumRecommendations().length > 0) {
   <div class="releases-grid">
     @for (rec of albumRecommendations(); track rec._id) {
-    <article class="release-card" [routerLink]="['/details', 'album', rec.spotifyId]">
+    <article class="release-card" [routerLink]="['/recommendations', rec._id]">
       <img [src]="rec.metadata?.imageUrl" [alt]="rec.metadata?.title" />
       <div>
         <h3>{{ rec.metadata?.title }}</h3>
