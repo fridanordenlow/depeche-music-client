@@ -6,6 +6,7 @@ import { UserLibrary } from './pages/user-library/user-library';
 import { SearchResults } from './pages/search-results/search-results';
 import { authGuard } from './guards/auth';
 import { RecommendationForm } from './pages/recommendations/recommendation-form';
+import { RecommendationDetail } from './pages/recommendation-detail/recommendation-detail';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -17,6 +18,10 @@ export const routes: Routes = [
     path: 'recommendations/new/:type/:id',
     component: RecommendationForm,
     canActivate: [authGuard],
+  },
+  {
+    path: 'recommendations/:id',
+    component: RecommendationDetail,
   },
   { path: '**', redirectTo: '' },
 ];
