@@ -39,6 +39,18 @@ export class RecommendationService {
     );
   }
 
+  getUserRecommendations() {
+    return this.http.get<UserRecommendation[]>(`${this.apiUrl}/user`).pipe(
+      tap((recommendations) => {
+        this._userRecommendations.set(recommendations);
+      }),
+      catchError((error) => {
+        console.error('Failed to fetch user recommendations:', error);
+        throw error;
+      })
+    );
+  }
+
   createRecommendation(payload: {
     spotifyId: string;
     type: 'album' | 'artist' | 'track';

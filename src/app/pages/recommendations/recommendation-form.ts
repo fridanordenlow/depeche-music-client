@@ -12,14 +12,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RecommendationService } from '../../services/recommendation';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { SpotifyService } from '../../services/spotify';
 import { Album, Artist, Track } from '../../models/music';
 import { firstValueFrom } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-recommendation-form',
@@ -32,7 +31,7 @@ export class RecommendationForm {
   private readonly recService = inject(RecommendationService);
   private readonly spotifyService = inject(SpotifyService);
   private readonly snackBar = inject(MatSnackBar);
-  private readonly location = inject(Location);
+  private readonly router = inject(Router);
 
   type = input.required<'album' | 'artist' | 'track'>();
   id = input.required<string>();
@@ -45,6 +44,18 @@ export class RecommendationForm {
       if (type === 'artist') return firstValueFrom(this.spotifyService.getArtist(id));
       return firstValueFrom(this.spotifyService.getTrack(id));
     },
+  });
+
+  userRecommendations = resource({
+    loader: async () => {
+      return firstValueFrom(this.recService.getUserRecommendations());
+    },
+  });
+
+  hasAlreadyRecommended = computed(() => {
+    const recs = this.userRecommendations.value();
+    const currentId = this.id();
+    return recs?.some((rec) => rec.spotifyId === currentId) ?? false;
   });
 
   review = linkedSignal({
@@ -84,6 +95,11 @@ export class RecommendationForm {
   async submit() {
     if (!this.isValid() || this.isSubmitting()) return;
 
+    if (this.hasAlreadyRecommended()) {
+      this.snackBar.open('You have already recommended this item.', 'Close', { duration: 3000 });
+      return;
+    }
+
     this.isSubmitting.set(true);
 
     try {
@@ -97,15 +113,15 @@ export class RecommendationForm {
 
       this.snackBar.open('Recommendation submitted!', 'Close', { duration: 2500 });
       this.review.set('');
-      this.location.back();
+      this.router.navigate(['/details', this.type(), this.id()]);
     } catch (error: any) {
-      let message = 'Failed to submit recommendation';
+      let message = 'Failed to submit recommendation.';
       if (error?.status === 401 || error?.status === 403) {
-        message = 'You must be logged in to submit recommendations';
+        message = 'You must be logged in to submit recommendations.';
       } else if (error?.status === 400) {
-        message = error.error?.message || 'Invalid recommendation data';
+        message = error.error?.message || 'Invalid recommendation. Please check your review.';
       } else if (error?.status === 409) {
-        message = 'You have already recommended this item';
+        message = 'You have already recommended this item.';
       }
       this.snackBar.open(message, 'Close', { duration: 3000 });
     } finally {
@@ -114,6 +130,6 @@ export class RecommendationForm {
   }
 
   cancel() {
-    this.location.back();
+    this.router.navigate(['/details', this.type(), this.id()]);
   }
 }

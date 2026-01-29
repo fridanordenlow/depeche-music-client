@@ -13,6 +13,7 @@ import { filter, startWith, switchMap } from 'rxjs';
 import { Album, Artist, Track } from '../../models/music';
 import { RouterLink } from '@angular/router';
 import { LibraryService } from '../../services/library';
+import { RecommendationService } from '../../services/recommendation';
 import { MatIcon } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -41,6 +42,7 @@ import { toDebouncedLoading } from '../../shared/utils/delayed-loading';
 export class Details {
   private spotifyService = inject(SpotifyService);
   private libraryService = inject(LibraryService);
+  private recommendationService = inject(RecommendationService);
   private snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
 
@@ -131,6 +133,18 @@ export class Details {
     const album = this.albumDetails();
     if (!album || !album.type) return null;
     return album.type.toUpperCase();
+  });
+
+  // User recommendations signal
+  userRecommendations = toSignal(this.recommendationService.getUserRecommendations(), {
+    initialValue: [],
+  });
+
+  // Check if user has already recommended this item
+  existingRecommendation = computed(() => {
+    const recs = this.userRecommendations();
+    const currentId = this.id();
+    return recs.find((rec) => rec.spotifyId === currentId);
   });
 
   detailsIsLoading = computed(() => !this.details());

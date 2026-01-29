@@ -52,8 +52,19 @@
     </div>
   </header>
 
-  <!-- TODO: Other text if recommended already? -->
-  <div class="rec-text recommend-link cta-block">
+  <div class="rec-text recommend-link">
+    @if (existingRecommendation(); as rec) {
+    <p>
+      You have written a review for this {{ type() }}.
+      <a
+        [routerLink]="['/recommendations', rec._id]"
+        [attr.aria-label]="'Read your recommendation for this ' + type()"
+      >
+        Read it!
+        <mat-icon>arrow_forward</mat-icon>
+      </a>
+    </p>
+    } @else {
     <p>
       Would you like to recommend this {{ type() }}? Write a review now!
       <a
@@ -61,8 +72,10 @@
         [attr.aria-label]="'Write a recommendation for this ' + type()"
       >
         Let's go!
+        <!-- <mat-icon>arrow_forward</mat-icon> -->
       </a>
     </p>
+    }
   </div>
 
   <div class="track-list">
@@ -117,7 +130,19 @@
     </div>
   </header>
 
-  <div class="rec-text recommend-link cta-block">
+  <div class="rec-text recommend-link">
+    @if (existingRecommendation(); as rec) {
+    <p>
+      You have reviewed this {{ type() }}.
+      <a
+        [routerLink]="['/recommendations', rec._id]"
+        [attr.aria-label]="'Read your recommendation for this ' + type()"
+      >
+        Read your review
+        <mat-icon>arrow_forward</mat-icon>
+      </a>
+    </p>
+    } @else {
     <p>
       Would you like to recommend this {{ type() }}? Write a review now!
       <a
@@ -125,8 +150,10 @@
         [attr.aria-label]="'Write a recommendation for this ' + type()"
       >
         Let's go!
+        <!-- <mat-icon>arrow_forward</mat-icon> -->
       </a>
     </p>
+    }
   </div>
 
   <div class="discography-section">
@@ -202,7 +229,19 @@
     </div>
   </header>
 
-  <div class="rec-text recommend-link cta-block">
+  <div class="rec-text recommend-link">
+    @if (existingRecommendation(); as rec) {
+    <p>
+      You have reviewed this {{ type() }}.
+      <a
+        [routerLink]="['/recommendations', rec._id]"
+        [attr.aria-label]="'Read your recommendation for this ' + type()"
+      >
+        Read your review
+        <mat-icon>arrow_forward</mat-icon>
+      </a>
+    </p>
+    } @else {
     <p>
       Would you like to recommend this {{ type() }}? Write a review now!
       <a
@@ -210,8 +249,10 @@
         [attr.aria-label]="'Write a recommendation for this ' + type()"
       >
         Let's go!
+        <!-- <mat-icon>arrow_forward</mat-icon> -->
       </a>
     </p>
+    }
   </div>
   }
 </div>
