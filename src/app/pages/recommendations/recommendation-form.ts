@@ -76,6 +76,11 @@ export class RecommendationForm {
     return this.type() === 'track' ? (val as Track) : null;
   });
 
+  itemTypeLabel = computed(() => {
+    const type = this.type();
+    return type.charAt(0).toUpperCase() + type.slice(1);
+  });
+
   async submit() {
     if (!this.isValid() || this.isSubmitting()) return;
 

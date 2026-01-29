@@ -40,4 +40,10 @@ export class RecommendationDetail {
   }
   isLoading = computed(() => !this.recommendation());
   showDelayedLoading = toDebouncedLoading(this.isLoading, 800);
+
+  recommendationTypeLabel = computed(() => {
+    const rec = this.recommendation();
+    if (!rec) return null;
+    return rec.type.charAt(0).toUpperCase() + rec.type.slice(1);
+  });
 }

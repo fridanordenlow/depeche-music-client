@@ -9,7 +9,7 @@
       }
     </div>
     <div class="info-wrapper">
-      <span class="type-label">{{ rec.type }}</span>
+      <span class="type-label">{{ recommendationTypeLabel() }}</span>
       <h1>{{ rec.metadata?.title }}</h1>
       @if (rec.metadata?.artists?.[0]?.name) {
       <p class="meta-text">{{ rec.metadata?.artists?.[0]?.name }}</p>

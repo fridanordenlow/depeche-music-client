@@ -8,7 +8,7 @@
     <div class="item-preview">
       <img [src]="album.images[0]?.url" [alt]="album.title" />
       <div class="info">
-        <span class="type-label">Album</span>
+        <span class="type-label">{{ albumDetails()?.type?.toUpperCase() }}</span>
         <h2>{{ album.title }}</h2>
         <p class="meta-text">{{ album.artists[0]?.name }}</p>
       </div>
@@ -17,7 +17,7 @@
     <div class="item-preview">
       <img [src]="artist.images[0]?.url" [alt]="artist.name" class="circle" />
       <div class="info">
-        <span class="type-label">Artist</span>
+        <span class="type-label">{{ itemTypeLabel() }}</span>
         <h2>{{ artist.name }}</h2>
       </div>
     </div>
@@ -25,7 +25,7 @@
     <div class="item-preview">
       <img [src]="track.album?.imageUrl" [alt]="track.album?.title" />
       <div class="info">
-        <span class="type-label">Track</span>
+        <span class="type-label">{{ itemTypeLabel() }}</span>
         <h2>{{ track.title }}</h2>
         <p class="meta-text">{{ track.artists[0]?.name }}</p>
       </div>

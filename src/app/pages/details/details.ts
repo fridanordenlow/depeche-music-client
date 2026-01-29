@@ -80,7 +80,7 @@ export class Details {
     const currentId = this.id();
     const match = library.find((item) => item.spotifyItemId === currentId);
 
-    console.log('Library size:', library.length);
+    // console.log('Library size:', library.length);
     console.log('Searching for ID:', currentId);
     console.log('Match found:', match);
 
@@ -125,6 +125,13 @@ export class Details {
   albumDetails = computed(() => (this.type() === 'album' ? (this.details() as Album) : null));
   artistDetails = computed(() => (this.type() === 'artist' ? (this.details() as Artist) : null));
   trackDetails = computed(() => (this.type() === 'track' ? (this.details() as Track) : null));
+
+  // Dynamic type label for album/single/compilation
+  albumTypeLabel = computed(() => {
+    const album = this.albumDetails();
+    if (!album || !album.type) return null;
+    return album.type.toUpperCase();
+  });
 
   detailsIsLoading = computed(() => !this.details());
 
