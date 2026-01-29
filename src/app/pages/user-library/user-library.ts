@@ -6,7 +6,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LibraryService } from '../../services/library';
 import { UserLibraryItem } from '../../models/library';
 import { MatActionList, MatDivider, MatListItem } from '@angular/material/list';
@@ -44,6 +44,7 @@ export class UserLibrary {
   private authService = inject(AuthService);
   private snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
+  private router = inject(Router);
 
   public readonly currentUser = this.authService.user;
   public readonly isLoading = signal(true);
@@ -53,7 +54,13 @@ export class UserLibrary {
     effect(() => {
       this.libraryService.getUserLibrary().subscribe({
         next: () => this.isLoading.set(false),
-        error: () => this.isLoading.set(false),
+        error: (err) => {
+          this.isLoading.set(false);
+          if (err.status === 401 || err.status === 403) {
+            this.snackBar.open('Session expired. Please log in again.', 'OK', { duration: 3000 });
+            this.router.navigate(['/auth/login']);
+          }
+        },
       });
     });
   }
