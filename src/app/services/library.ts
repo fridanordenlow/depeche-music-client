@@ -47,7 +47,7 @@ export class LibraryService {
 
   updateItemStatus(libraryItemId: string, newStatus: 'love' | 'explore' | 'listened') {
     return this.http
-      .put<{ message: string; updatedItem: UserLibraryItem }>(
+      .patch<{ message: string; updatedItem: UserLibraryItem }>(
         `${this.apiUrl}/update/${libraryItemId}`,
         { status: newStatus }
       )
@@ -58,7 +58,7 @@ export class LibraryService {
           );
         }),
         catchError((error) => {
-          console.error('Failed to update item status:', error);
+          console.error('Failed to update status for item:', libraryItemId, error);
           throw error;
         })
       );
