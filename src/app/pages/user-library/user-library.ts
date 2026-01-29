@@ -19,6 +19,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { AuthService } from '../../services/auth';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { Loading } from '../../shared/loading/loading';
+import { toDebouncedLoading } from '../../shared/utils/delayed-loading';
 
 @Component({
   selector: 'app-user-library',
@@ -46,6 +47,7 @@ export class UserLibrary {
 
   public readonly currentUser = this.authService.user;
   public readonly isLoading = signal(true);
+  showDelayedLoading = toDebouncedLoading(this.isLoading, 800);
 
   constructor() {
     effect(() => {

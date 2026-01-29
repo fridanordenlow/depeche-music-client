@@ -5,6 +5,7 @@ import { computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Album } from '../../models/music';
 import { Loading } from '../../shared/loading/loading';
+import { toDebouncedLoading } from '../../shared/utils/delayed-loading';
 
 @Component({
   selector: 'app-new-releases',
@@ -19,6 +20,7 @@ export class NewReleases {
   private allNewReleases = toSignal(this.spotifyService.getNewReleases(), { initialValue: null });
 
   isLoading = computed(() => !this.allNewReleases());
+  showDelayedLoading = toDebouncedLoading(this.isLoading, 800);
 
   featuredNewReleases = computed(() => {
     const data = this.allNewReleases();

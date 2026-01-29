@@ -1,17 +1,17 @@
 <div class="search-container">
-  @if (currentQuery() && !isLoading()) {
+  @if (showDelayedLoading()) {
+  <app-loading></app-loading>
+  } @if (currentQuery() && !isLoading()) {
   <h1 class="search-title">
     Search results for "<span>{{ currentQuery() }}</span
     >"
   </h1>
-  } @if (isLoading()) {
-  <app-loading></app-loading>
   } @if (errorMessage(); as message) {
   <div class="error-container">
     <mat-icon>error_outline</mat-icon>
     <p>{{ message }}</p>
   </div>
-  } @if (searchResults(); as results) { @if (results.artists.items.length ||
+  } @if (!isLoading()) { @if (searchResults(); as results) { @if (results.artists.items.length ||
   results.albums.items.length || results.tracks.items.length) {
   <div class="results-grid">
     @if (results.artists.items.length) {
@@ -71,9 +71,5 @@
   <div class="no-results">
     <p>No results found for "{{ currentQuery() }}"</p>
   </div>
-  } } @else {
-  <div class="no-results">
-    <p>No results found for "{{ currentQuery() }}"</p>
-  </div>
-  }
+  } } }
 </div>

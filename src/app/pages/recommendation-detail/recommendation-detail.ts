@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { Loading } from '../../shared/loading/loading';
 import { filter, startWith, switchMap } from 'rxjs';
+import { toDebouncedLoading } from '../../shared/utils/delayed-loading';
 import { Location, DatePipe } from '@angular/common';
 
 @Component({
@@ -38,4 +39,5 @@ export class RecommendationDetail {
     this.location.back();
   }
   isLoading = computed(() => !this.recommendation());
+  showDelayedLoading = toDebouncedLoading(this.isLoading, 800);
 }

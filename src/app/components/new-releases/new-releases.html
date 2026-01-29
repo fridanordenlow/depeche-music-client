@@ -1,6 +1,6 @@
 <section class="new-releases-section">
   <h2>New Releases</h2>
-  @if (isLoading()) {
+  @if (showDelayedLoading()) {
   <app-loading></app-loading>
   } @else if (featuredNewReleases().length > 0) {
   <div class="releases-grid">

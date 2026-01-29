@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { SpotifyService } from '../../services/spotify';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { filter, of, startWith, switchMap } from 'rxjs';
+import { filter, startWith, switchMap } from 'rxjs';
 import { Album, Artist, Track } from '../../models/music';
 import { RouterLink } from '@angular/router';
 import { LibraryService } from '../../services/library';
@@ -21,6 +21,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { DurationPipe } from '../../shared/pipes/duration';
 import { Loading } from '../../shared/loading/loading';
+import { toDebouncedLoading } from '../../shared/utils/delayed-loading';
 
 @Component({
   selector: 'app-details',
@@ -58,6 +59,11 @@ export class Details {
   readonly pageIndex = signal(0);
   readonly pageSize = signal(10);
   private lastArtistId: string | null = null;
+
+  private isLoading = computed(
+    () => !this.albumDetails() && !this.artistDetails() && !this.trackDetails()
+  );
+  showDelayedLoading = toDebouncedLoading(this.isLoading, 1500);
 
   constructor() {
     effect(() => {

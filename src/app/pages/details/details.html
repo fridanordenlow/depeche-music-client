@@ -1,5 +1,5 @@
 <div class="details-container">
-  @if (!albumDetails() && !artistDetails() && !trackDetails()) {
+  @if (showDelayedLoading()) {
   <app-loading></app-loading>
   } @if (type() === 'album' && albumDetails(); as album) {
   <header class="hero-section">
@@ -9,7 +9,7 @@
       }
     </div>
     <div class="info-wrapper">
-      <span class="type-label">ALBUM</span>
+      <span class="type-label">Album</span>
       <h1>{{ album.title }}</h1>
 
       <div class="action-buttons">
@@ -81,7 +81,7 @@
       }
     </div>
     <div class="info-wrapper">
-      <span class="type-label">ARTIST</span>
+      <span class="type-label">Artist</span>
       <h1>{{ artist.name }}</h1>
       <div class="action-buttons">
         <button
@@ -160,7 +160,7 @@
       <img [src]="track.album?.imageUrl" [alt]="track.album?.title" class="main-img" />
     </div>
     <div class="info-wrapper">
-      <span class="type-label">TRACK</span>
+      <span class="type-label">Track</span>
       <h1>{{ track.title }}</h1>
       <span class="track-duration">{{ track.durationMs | duration }}</span>
       <div class="action-buttons">

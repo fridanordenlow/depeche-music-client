@@ -1,5 +1,5 @@
 <div class="rec-detail-container">
-  @if (isLoading()) {
+  @if (showDelayedLoading()) {
   <app-loading></app-loading>
   } @else if (recommendation(); as rec) {
   <header class="hero-section">

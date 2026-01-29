@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { RecommendationService } from '../../services/recommendation';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Loading } from '../../shared/loading/loading';
+import { toDebouncedLoading } from '../../shared/utils/delayed-loading';
 
 @Component({
   selector: 'app-user-releases-recommendations',
@@ -20,6 +21,7 @@ export class UserReleasesRecommendations {
   });
 
   isLoading = computed(() => !this.allRecommendations());
+  showDelayedLoading = toDebouncedLoading(this.isLoading, 800);
 
   albumRecommendations = computed(() => {
     const recs = this.allRecommendations();

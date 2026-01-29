@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Loading } from '../../shared/loading/loading';
+import { toDebouncedLoading } from '../../shared/utils/delayed-loading';
 
 @Component({
   selector: 'app-search-results',
@@ -42,6 +43,7 @@ export class SearchResults {
 
   currentQuery = signal<string | null>(null);
   isLoading = signal(false);
+  showDelayedLoading = toDebouncedLoading(this.isLoading, 4000);
   errorMessage = signal<string | null>(null);
 
   private getEmptySearchResponse(): SearchResponse {
