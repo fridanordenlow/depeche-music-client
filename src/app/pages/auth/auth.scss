@@ -3,34 +3,33 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 24px;
 
   .message {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     gap: 8px;
     color: #a94442;
-    margin-bottom: 24px;
-    width: 100%;
-    max-width: 400px;
+    margin-bottom: 16px;
+    // width: 100%;
+    max-width: 350px;
+    flex-wrap: wrap;
+    text-wrap: balance;
+    text-align: center;
   }
 
   .error-message {
     color: #1a1b1f;
     margin-bottom: 0;
-    text-wrap: wrap;
-
-    @media (max-width: 480px) {
-      font-size: 0.98rem;
-    }
+    text-wrap: balance;
   }
 
   .auth-card {
     width: 100%;
     max-width: 350px;
     padding: 16px;
-    border-radius: 12px;
+    border-radius: 8px;
+    box-shadow: none;
   }
 
   .full-width {
