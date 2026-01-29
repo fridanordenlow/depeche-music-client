@@ -23,6 +23,23 @@ export class UserReleasesRecommendations {
 
   albumRecommendations = computed(() => {
     const recs = this.allRecommendations();
-    return recs ? recs.filter((rec) => rec.type === 'album') : [];
+    if (!recs) return [];
+
+    const albumRecs = recs.filter((rec) => rec.type === 'album');
+
+    // Shuffle first so the recommendations per spotifyId are randomized
+    const shuffledAlbums = [...albumRecs].sort(() => Math.random() - 0.5);
+
+    // Only show one recommendation per album (spotifyId)
+    const uniqueAlbums = new Map<string, (typeof albumRecs)[0]>();
+
+    for (const rec of shuffledAlbums) {
+      if (!uniqueAlbums.has(rec.spotifyId)) {
+        uniqueAlbums.set(rec.spotifyId, rec);
+      }
+    }
+
+    // Take max 10
+    return Array.from(uniqueAlbums.values()).slice(0, 10);
   });
 }
