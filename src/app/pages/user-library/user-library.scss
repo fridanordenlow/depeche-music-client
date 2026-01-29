@@ -14,11 +14,6 @@
     flex-direction: column;
     gap: 16px;
     margin-bottom: 36px;
-    // padding: 18px;
-    // border: 1px solid rgba(0, 0, 0, 0.06);
-    // border-radius: 8px;
-    // background: linear-gradient(135deg, #fff, #f9f9f9);
-    // box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     width: 100%;
     max-width: 600px;
 
@@ -123,9 +118,13 @@
 
   .simple-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
     margin-bottom: 32px;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
   }
 
   .grid-item {
@@ -140,7 +139,6 @@
 
     img {
       width: 100%;
-      // max-width: 150px;
       aspect-ratio: 1/1;
       object-fit: cover;
       margin-bottom: 12px;
@@ -197,6 +195,5 @@
 
   .empty-category-text {
     color: #757575;
-    // padding: 16px 0;
   }
 }
