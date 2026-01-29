@@ -83,7 +83,7 @@ export class UserLibrary {
     const dialogRef = this.dialog.open(ConfirmDialog, {
       width: '300px',
       data: {
-        title: 'Remove from library?',
+        title: 'Item already in library',
         message: 'Are you sure you want to remove this item from your library?',
         confirmText: 'Remove',
         cancelText: 'Cancel',

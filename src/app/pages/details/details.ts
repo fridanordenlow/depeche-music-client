@@ -95,7 +95,7 @@ export class Details {
       const dialogRef = this.dialog.open(ConfirmDialog, {
         width: '300px',
         data: {
-          title: 'Remove from library?',
+          title: 'Item already in library',
           message: `This item is already in your library. Do you want to remove it?`,
           confirmText: 'Remove',
           cancelText: 'Cancel',
