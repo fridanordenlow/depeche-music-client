@@ -103,8 +103,25 @@ main {
 // Snackbar styling
 ::ng-deep .mdc-snackbar__surface {
   background-color: #323232 !important;
+  opacity: 1 !important;
 }
 
 ::ng-deep .mat-mdc-snack-bar-label {
   color: #ffffff !important;
+}
+
+::ng-deep .mdc-snackbar {
+  background-color: #323232 !important;
+}
+
+// Custom snackbar class for mobile support
+::ng-deep .app-snackbar {
+  .mdc-snackbar__surface {
+    background-color: #323232 !important;
+    opacity: 1 !important;
+  }
+
+  .mat-mdc-snack-bar-label {
+    color: #ffffff !important;
+  }
 }

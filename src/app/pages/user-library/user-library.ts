@@ -57,7 +57,10 @@ export class UserLibrary {
         error: (err) => {
           this.isLoading.set(false);
           if (err.status === 401 || err.status === 403) {
-            this.snackBar.open('Session expired. Please log in again.', 'OK', { duration: 3000 });
+            this.snackBar.open('Session expired. Please log in again.', 'OK', {
+              duration: 3000,
+              panelClass: 'app-snackbar',
+            });
             this.router.navigate(['/auth/login']);
           }
         },
@@ -92,7 +95,7 @@ export class UserLibrary {
     const dialogRef = this.dialog.open(ConfirmDialog, {
       width: '300px',
       data: {
-        title: 'Item already in library',
+        title: 'Remove item',
         message: 'Are you sure you want to remove this item from your library?',
         confirmText: 'Remove',
         cancelText: 'Cancel',
@@ -105,6 +108,7 @@ export class UserLibrary {
           next: () => {
             this.snackBar.open('Removed from library', 'Close', {
               duration: 3000,
+              panelClass: 'app-snackbar',
             });
           },
           error: (err) => {
@@ -116,7 +120,7 @@ export class UserLibrary {
             } else if (err.error?.message) {
               message = err.error.message;
             }
-            this.snackBar.open(message, 'OK', { duration: 3000 });
+            this.snackBar.open(message, 'OK', { duration: 3000, panelClass: 'app-snackbar' });
             console.error('Delete failed', err);
           },
         });

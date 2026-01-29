@@ -175,7 +175,11 @@ export class Details {
       dialogRef.afterClosed().subscribe((result) => {
         if (result === true) {
           this.libraryService.removeItem(existing._id).subscribe({
-            next: () => this.snackBar.open('Removed from library', 'Close', { duration: 3000 }),
+            next: () =>
+              this.snackBar.open('Removed from library', 'Close', {
+                duration: 3000,
+                panelClass: 'app-snackbar',
+              }),
             error: (err) => {
               let message = 'Could not remove item';
               if (err.status === 401 || err.status === 403) {
@@ -185,7 +189,7 @@ export class Details {
               } else if (err.error?.message) {
                 message = err.error.message;
               }
-              this.snackBar.open(message, 'OK', { duration: 3000 });
+              this.snackBar.open(message, 'OK', { duration: 3000, panelClass: 'app-snackbar' });
               console.error('Removal error:', err);
             },
           });
@@ -199,6 +203,7 @@ export class Details {
         duration: 3000,
         horizontalPosition: 'center',
         verticalPosition: 'bottom',
+        panelClass: 'app-snackbar',
       });
     };
 
@@ -213,7 +218,7 @@ export class Details {
       } else if (err.error?.message) {
         message = err.error.message;
       }
-      this.snackBar.open(message, 'OK', { duration: 3000 });
+      this.snackBar.open(message, 'OK', { duration: 3000, panelClass: 'app-snackbar' });
       console.error('Library error:', err);
     };
 

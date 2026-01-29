@@ -96,7 +96,10 @@ export class RecommendationForm {
     if (!this.isValid() || this.isSubmitting()) return;
 
     if (this.hasAlreadyRecommended()) {
-      this.snackBar.open('You have already recommended this item.', 'Close', { duration: 3000 });
+      this.snackBar.open('You have already recommended this item.', 'Close', {
+        duration: 3000,
+        panelClass: 'app-snackbar',
+      });
       return;
     }
 
@@ -111,7 +114,10 @@ export class RecommendationForm {
         })
       );
 
-      this.snackBar.open('Recommendation submitted!', 'Close', { duration: 2500 });
+      this.snackBar.open('Recommendation submitted!', 'Close', {
+        duration: 2500,
+        panelClass: 'app-snackbar',
+      });
       this.review.set('');
       this.router.navigate(['/details', this.type(), this.id()]);
     } catch (error: any) {
@@ -123,7 +129,7 @@ export class RecommendationForm {
       } else if (error?.status === 409) {
         message = 'You have already recommended this item.';
       }
-      this.snackBar.open(message, 'Close', { duration: 3000 });
+      this.snackBar.open(message, 'Close', { duration: 3000, panelClass: 'app-snackbar' });
     } finally {
       this.isSubmitting.set(false);
     }
