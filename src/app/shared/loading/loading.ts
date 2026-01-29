@@ -4,21 +4,11 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-loading',
   imports: [MatProgressSpinner],
-  template: `
-    <div class="loading-container">
-      <mat-spinner [diameter]="diameter()"></mat-spinner>
-    </div>
-  `,
-  styles: `
-    .loading-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 4rem;
-    }
-  `,
+  templateUrl: './loading.html',
+  styleUrl: './loading.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Loading {
   diameter = input(50);
+  text = input('Loading...');
 }
