@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { SpotifyService } from '../../services/spotify';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { filter, of, startWith, switchMap } from 'rxjs';
@@ -9,13 +17,22 @@ import { MatIcon } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ConfirmDialog } from '../../shared/confirm-dialog/confirm-dialog';
 import { DurationPipe } from '../../shared/pipes/duration';
 import { Loading } from '../../shared/loading/loading';
 
 @Component({
   selector: 'app-details',
-  imports: [RouterLink, MatIcon, MatTooltipModule, MatDialogModule, DurationPipe, Loading],
+  imports: [
+    RouterLink,
+    MatIcon,
+    MatTooltipModule,
+    MatDialogModule,
+    MatPaginatorModule,
+    DurationPipe,
+    Loading,
+  ],
   templateUrl: './details.html',
   styleUrl: './details.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,6 +54,20 @@ export class Details {
     if (!currentType || !currentId) return null;
     return { type: currentType, id: currentId };
   });
+
+  readonly pageIndex = signal(0);
+  readonly pageSize = signal(10);
+  private lastArtistId: string | null = null;
+
+  constructor() {
+    effect(() => {
+      const params = this.routeParams();
+      if (params?.type === 'artist' && params.id !== this.lastArtistId) {
+        this.lastArtistId = params.id;
+        this.pageIndex.set(0);
+      }
+    });
+  }
 
   existingItem = computed(() => {
     const library = this.libraryService.userLibrary();
@@ -62,20 +93,27 @@ export class Details {
     )
   );
 
-  artistAlbums = toSignal(
-    toObservable(this.routeParams).pipe(
+  private artistAlbumsParams = computed(() => {
+    const params = this.routeParams();
+    if (!params || params.type !== 'artist') return null;
+    return {
+      id: params.id,
+      limit: this.pageSize(),
+      offset: this.pageIndex() * this.pageSize(),
+    };
+  });
+
+  artistAlbumsResponse = toSignal(
+    toObservable(this.artistAlbumsParams).pipe(
       filter((params) => params !== null),
-      switchMap((params) => {
-        if (params.type === 'artist') {
-          console.log(params);
-          return this.spotifyService.getArtistAlbums(params.id);
-        }
-        return of([]);
-      }),
-      startWith([])
+      switchMap(({ id, limit, offset }) => this.spotifyService.getArtistAlbums(id, limit, offset)),
+      startWith(null)
     ),
-    { initialValue: [] as Album[] }
+    { initialValue: null }
   );
+
+  artistAlbums = computed(() => this.artistAlbumsResponse()?.items ?? []);
+  artistAlbumsTotal = computed(() => this.artistAlbumsResponse()?.pagination.total ?? 0);
 
   // Help signals for types
   albumDetails = computed(() => (this.type() === 'album' ? (this.details() as Album) : null));
@@ -83,6 +121,11 @@ export class Details {
   trackDetails = computed(() => (this.type() === 'track' ? (this.details() as Track) : null));
 
   detailsIsLoading = computed(() => !this.details());
+
+  onAlbumsPage(event: PageEvent) {
+    this.pageIndex.set(event.pageIndex);
+    this.pageSize.set(event.pageSize);
+  }
 
   addToLibrary(
     spotifyItemId: string,

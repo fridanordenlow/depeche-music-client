@@ -55,7 +55,7 @@
 
   .rec-text {
     margin-top: 2rem;
-    // opacity: 0.8;
+    opacity: 0.8;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -153,8 +153,6 @@
       align-items: center;
       gap: 8px;
       cursor: pointer;
-      padding: 4px;
-      border-radius: 4px;
 
       @media (min-width: 480px) {
         flex-direction: column;

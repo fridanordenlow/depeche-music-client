@@ -137,11 +137,22 @@
         <img [src]="album.images[0]?.url" [alt]="album.title" class="discography-img" />
         <div>
           <h3>{{ album.title }}</h3>
-          <p>{{ album.releaseDate }}</p>
+          <p>{{ album.releaseDate.split('-')[0] }}</p>
         </div>
       </article>
       }
     </div>
+    @if (artistAlbumsTotal() > pageSize()) {
+    <mat-paginator
+      [length]="artistAlbumsTotal()"
+      [pageSize]="pageSize()"
+      [pageIndex]="pageIndex()"
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      [showFirstLastButtons]="true"
+      (page)="onAlbumsPage($event)"
+      aria-label="Artist discography pagination"
+    ></mat-paginator>
+    }
   </div>
   } @if (type() === 'track' && trackDetails(); as track) {
   <header class="hero-section">
