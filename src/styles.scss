@@ -101,21 +101,23 @@ main {
 }
 
 // Snackbar styling
-::ng-deep .mdc-snackbar__surface {
+.mdc-snackbar__surface {
   background-color: #323232 !important;
   opacity: 1 !important;
 }
 
-::ng-deep .mat-mdc-snack-bar-label {
+.mat-mdc-snack-bar-label {
   color: #ffffff !important;
 }
 
-::ng-deep .mdc-snackbar {
+.mdc-snackbar {
   background-color: #323232 !important;
 }
 
-// Custom snackbar class for mobile support
-::ng-deep .app-snackbar {
+.app-snackbar {
+  background-color: #323232 !important;
+  opacity: 1 !important;
+
   .mdc-snackbar__surface {
     background-color: #323232 !important;
     opacity: 1 !important;
@@ -124,4 +126,19 @@ main {
   .mat-mdc-snack-bar-label {
     color: #ffffff !important;
   }
+
+  .mdc-button {
+    color: #ffffff !important;
+  }
+}
+
+// Ensure snackbar container has proper styling
+::ng-deep .mat-mdc-snack-bar-container {
+  background-color: #323232 !important;
+  opacity: 1 !important;
+}
+
+::ng-deep .mat-mdc-snack-bar-container.app-snackbar {
+  background-color: #323232 !important;
+  opacity: 1 !important;
 }
