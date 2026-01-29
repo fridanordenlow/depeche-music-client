@@ -96,13 +96,19 @@ export class UserLibrary {
           next: () => {
             this.snackBar.open('Removed from library', 'Close', {
               duration: 3000,
-              horizontalPosition: 'center',
-              verticalPosition: 'bottom',
             });
           },
           error: (err) => {
+            let message = 'Could not remove item. Try again later.';
+            if (err.status === 401 || err.status === 403) {
+              message = 'Authentication required. Please log in again.';
+            } else if (err.status === 404) {
+              message = 'Item not found in your library.';
+            } else if (err.error?.message) {
+              message = err.error.message;
+            }
+            this.snackBar.open(message, 'OK', { duration: 3000 });
             console.error('Delete failed', err);
-            this.snackBar.open('Could not remove item. Try again later.', 'OK');
           },
         });
       }

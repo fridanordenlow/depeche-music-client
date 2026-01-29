@@ -85,6 +85,10 @@ export class Auth {
       error: (err) => {
         if (err.status === 401) {
           this.errorMessage.set('Invalid email or password.');
+        } else if (err.status === 409) {
+          this.errorMessage.set('This email is already registered. Please log in.');
+        } else if (err.status === 400) {
+          this.errorMessage.set(err.error?.message || 'Invalid input. Please check your details.');
         } else {
           this.errorMessage.set('An unexpected error occurred. Please try again later.');
         }

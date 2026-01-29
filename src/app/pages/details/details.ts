@@ -107,9 +107,15 @@ export class Details {
           this.libraryService.removeItem(existing._id).subscribe({
             next: () => this.snackBar.open('Removed from library', 'Close', { duration: 3000 }),
             error: (err) => {
-              this.snackBar.open('Could not remove item. Try again later.', 'OK', {
-                duration: 3000,
-              });
+              let message = 'Could not remove item';
+              if (err.status === 401 || err.status === 403) {
+                message = 'Authentication required. Please log in again';
+              } else if (err.status === 404) {
+                message = 'Item not found in your library';
+              } else if (err.error?.message) {
+                message = err.error.message;
+              }
+              this.snackBar.open(message, 'OK', { duration: 3000 });
               console.error('Removal error:', err);
             },
           });
@@ -126,10 +132,19 @@ export class Details {
       });
     };
 
-    const handleError = (err: unknown) => {
-      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-      this.snackBar.open('Could not add item to library. Are you logged in?', 'OK');
-      console.log('Library error:', errorMessage);
+    const handleError = (err: any) => {
+      let message = 'Could not update library';
+      if (err.status === 401 || err.status === 403) {
+        message = 'Authentication required. Please log in';
+      } else if (err.status === 400) {
+        message = err.error?.message || 'Invalid data provided';
+      } else if (err.status === 409) {
+        message = 'Item already exists in your library';
+      } else if (err.error?.message) {
+        message = err.error.message;
+      }
+      this.snackBar.open(message, 'OK', { duration: 3000 });
+      console.error('Library error:', err);
     };
 
     if (existing) {

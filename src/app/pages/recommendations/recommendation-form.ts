@@ -93,8 +93,16 @@ export class RecommendationForm {
       this.snackBar.open('Recommendation submitted!', 'Close', { duration: 2500 });
       this.review.set('');
       this.location.back();
-    } catch (error) {
-      this.snackBar.open('Failed to submit', 'Close', { duration: 3000 });
+    } catch (error: any) {
+      let message = 'Failed to submit recommendation';
+      if (error?.status === 401 || error?.status === 403) {
+        message = 'You must be logged in to submit recommendations';
+      } else if (error?.status === 400) {
+        message = error.error?.message || 'Invalid recommendation data';
+      } else if (error?.status === 409) {
+        message = 'You have already recommended this item';
+      }
+      this.snackBar.open(message, 'Close', { duration: 3000 });
     } finally {
       this.isSubmitting.set(false);
     }

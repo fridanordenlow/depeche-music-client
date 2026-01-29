@@ -15,7 +15,7 @@ import { Location, DatePipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecommendationDetail {
-  private readonly service = inject(RecommendationService);
+  private readonly recommendationService = inject(RecommendationService);
   private readonly location = inject(Location);
 
   // Route input from /recommendations/:id
@@ -29,7 +29,7 @@ export class RecommendationDetail {
   recommendation = toSignal(
     toObservable(this.params).pipe(
       filter((p) => p !== null),
-      switchMap(({ id }) => this.service.getRecommendationById(id)),
+      switchMap(({ id }) => this.recommendationService.getRecommendationById(id)),
       startWith(null)
     )
   );
