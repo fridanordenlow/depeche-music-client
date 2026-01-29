@@ -1,8 +1,6 @@
 <section class="user-releases-section">
+  @if (albumRecommendations().length > 0) {
   <h2>User Recommended Releases</h2>
-  @if (showDelayedLoading()) {
-  <app-loading></app-loading>
-  } @else if (albumRecommendations().length > 0) {
   <div class="releases-grid">
     @for (rec of albumRecommendations(); track rec._id) {
     <article class="release-card" [routerLink]="['/recommendations', rec._id]">
@@ -13,10 +11,6 @@
       </div>
     </article>
     }
-  </div>
-  } @else {
-  <div class="empty-state">
-    <p>No user recommendations available.</p>
   </div>
   }
 </section>
