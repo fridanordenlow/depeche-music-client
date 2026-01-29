@@ -46,13 +46,20 @@ export class SpotifyService {
     );
   }
 
-  getArtistAlbums(id: string) {
-    return this.http.get<Album[]>(`${this.baseUrl}/artists/${id}/albums`).pipe(
-      catchError((error) => {
-        console.error('Failed to fetch artist albums:', error);
-        throw error;
+  getArtistAlbums(id: string, limit: number = 10, offset: number = 0) {
+    return this.http
+      .get<AlbumListResponse>(`${this.baseUrl}/artists/${id}/albums`, {
+        params: {
+          limit: limit.toString(),
+          offset: offset.toString(),
+        },
       })
-    );
+      .pipe(
+        catchError((error) => {
+          console.error('Failed to fetch artist albums:', error);
+          throw error;
+        })
+      );
   }
 
   search(query: string, limit: number = 20, offset: number = 0) {
