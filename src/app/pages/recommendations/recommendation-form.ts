@@ -46,14 +46,14 @@ export class RecommendationForm {
     },
   });
 
-  userRecommendations = resource({
+  userRecs = resource({
     loader: async () => {
-      return firstValueFrom(this.recService.getUserRecommendations());
+      return firstValueFrom(this.recService.getUserRecs());
     },
   });
 
   hasAlreadyRecommended = computed(() => {
-    const recs = this.userRecommendations.value();
+    const recs = this.userRecs.value();
     const currentId = this.id();
     return recs?.some((rec) => rec.spotifyId === currentId) ?? false;
   });

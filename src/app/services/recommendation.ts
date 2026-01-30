@@ -11,17 +11,17 @@ export class RecommendationService {
   private readonly apiUrl = 'https://depeche-music-api.onrender.com/api/recommendations';
 
   // Signal to hold public recommendations
-  private _publicRecommendations = signal<UserRecommendation[]>([]);
-  public publicRecommendations = this._publicRecommendations.asReadonly();
+  private _publicRecs = signal<UserRecommendation[]>([]);
+  public publicRecs = this._publicRecs.asReadonly();
 
   // Signal to hold current user's recommendations
-  private _userRecommendations = signal<UserRecommendation[]>([]);
-  public userRecommendations = this._userRecommendations.asReadonly();
+  private _userRecs = signal<UserRecommendation[]>([]);
+  public userRecs = this._userRecs.asReadonly();
 
   getPublicRecommendations() {
     return this.http.get<UserRecommendation[]>(`${this.apiUrl}/all`).pipe(
-      tap((recommendations) => {
-        this._publicRecommendations.set(recommendations);
+      tap((recs) => {
+        this._publicRecs.set(recs);
       }),
       catchError((error) => {
         console.error('Failed to fetch public recommendations:', error);
@@ -39,10 +39,10 @@ export class RecommendationService {
     );
   }
 
-  getUserRecommendations() {
+  getUserRecs() {
     return this.http.get<UserRecommendation[]>(`${this.apiUrl}/user`).pipe(
-      tap((recommendations) => {
-        this._userRecommendations.set(recommendations);
+      tap((recs) => {
+        this._userRecs.set(recs);
       }),
       catchError((error) => {
         console.error('Failed to fetch user recommendations:', error);
@@ -58,8 +58,7 @@ export class RecommendationService {
   }) {
     return this.http.post<UserRecommendation>(`${this.apiUrl}/add`, payload).pipe(
       tap((created) => {
-        // Optionally cache it locally for UX; keep minimal for now
-        this._userRecommendations.set([...this._userRecommendations(), created]);
+        this._userRecs.update((current) => [...current, created]);
       }),
       catchError((error) => {
         console.error('Failed to create recommendation:', error);
