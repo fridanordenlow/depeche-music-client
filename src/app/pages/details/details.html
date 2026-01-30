@@ -14,7 +14,7 @@
 
       <div class="action-buttons">
         <button
-          (click)="addToLibrary(album.id, 'album', 'love')"
+          (click)="addToLibrary('love')"
           aria-label="Add to your library of loved album"
           matTooltip="Add to loved albums"
           [class.active-status]="existingItem()?.status === 'love'"
@@ -24,7 +24,7 @@
           }}</mat-icon>
         </button>
         <button
-          (click)="addToLibrary(album.id, 'album', 'explore')"
+          (click)="addToLibrary('explore')"
           aria-label="Add to your library of albums you wish to explore"
           matTooltip="Add to albums to explore"
           [class.active-status]="existingItem()?.status === 'explore'"
@@ -34,7 +34,7 @@
           }}</mat-icon>
         </button>
         <button
-          (click)="addToLibrary(album.id, 'album', 'listened')"
+          (click)="addToLibrary('listened')"
           aria-label="Add to your library of albums you have listened to"
           matTooltip="Add to listened albums"
           [class.active-status]="existingItem()?.status === 'listened'"
@@ -53,7 +53,7 @@
   </header>
 
   <div class="rec-text recommend-link">
-    @if (existingRecommendation(); as rec) {
+    @if (existingRec(); as rec) {
     <p>
       You have written a review for this {{ type() }}.
       <a
@@ -98,7 +98,7 @@
       <h1>{{ artist.name }}</h1>
       <div class="action-buttons">
         <button
-          (click)="addToLibrary(artist.id, 'artist', 'love')"
+          (click)="addToLibrary('love')"
           [class.active-status]="existingItem()?.status === 'love'"
         >
           <mat-icon>{{
@@ -106,7 +106,7 @@
           }}</mat-icon>
         </button>
         <button
-          (click)="addToLibrary(artist.id, 'artist', 'explore')"
+          (click)="addToLibrary('explore')"
           [class.active-status]="existingItem()?.status === 'explore'"
         >
           <mat-icon>{{
@@ -114,7 +114,7 @@
           }}</mat-icon>
         </button>
         <button
-          (click)="addToLibrary(artist.id, 'artist', 'listened')"
+          (click)="addToLibrary('listened')"
           [class.active-status]="existingItem()?.status === 'listened'"
         >
           <mat-icon>{{
@@ -131,7 +131,7 @@
   </header>
 
   <div class="rec-text recommend-link">
-    @if (existingRecommendation(); as rec) {
+    @if (existingRec(); as rec) {
     <p>
       You have reviewed this {{ type() }}.
       <a
@@ -192,7 +192,7 @@
       <span class="track-duration">{{ track.durationMs | duration }}</span>
       <div class="action-buttons">
         <button
-          (click)="addToLibrary(track.id, 'track', 'love')"
+          (click)="addToLibrary('love')"
           [class.active-status]="existingItem()?.status === 'love'"
         >
           <mat-icon>{{
@@ -200,7 +200,7 @@
           }}</mat-icon>
         </button>
         <button
-          (click)="addToLibrary(track.id, 'track', 'explore')"
+          (click)="addToLibrary('explore')"
           [class.active-status]="existingItem()?.status === 'explore'"
         >
           <mat-icon>{{
@@ -208,7 +208,7 @@
           }}</mat-icon>
         </button>
         <button
-          (click)="addToLibrary(track.id, 'track', 'listened')"
+          (click)="addToLibrary('listened')"
           [class.active-status]="existingItem()?.status === 'listened'"
         >
           <mat-icon>{{
@@ -230,7 +230,7 @@
   </header>
 
   <div class="rec-text recommend-link">
-    @if (existingRecommendation(); as rec) {
+    @if (existingRec(); as rec) {
     <p>
       You have reviewed this {{ type() }}.
       <a
