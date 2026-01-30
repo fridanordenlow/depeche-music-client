@@ -1,7 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 @use 'styles/reset';
-@use 'styles/base';
-@use 'styles/layout';
 @use 'styles/variables' as *;
 
 // Include theming for Angular Material with `mat.theme()`.
@@ -142,3 +140,11 @@ main {
   background-color: #323232 !important;
   opacity: 1 !important;
 }
+
+// Unused ?
+// .grid {
+//   display: grid;
+//   grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+//   gap: 1rem;
+//   margin-top: 2rem;
+// }
