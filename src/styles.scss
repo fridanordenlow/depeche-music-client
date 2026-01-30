@@ -78,8 +78,11 @@ main {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding-top: 1rem;
   padding-bottom: 3rem;
+
+  @media (min-width: 768px) {
+    padding-top: 0.5rem;
+  }
 }
 
 .width-limit {
