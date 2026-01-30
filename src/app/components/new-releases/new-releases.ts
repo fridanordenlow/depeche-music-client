@@ -21,9 +21,11 @@ export class NewReleases {
 
   featuredNewReleases = computed(() => {
     const data = this.allNewReleases();
-    if (!data) return [];
+    if (!data || data.items.length === 0) return [];
 
-    return data.items.filter((item) => item.type === 'album').slice(0, 10);
+    // Shuffle all items and return 10 random ones
+    const shuffled = [...data.items].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, 10);
   });
 
   getArtistNames(album: Album): string {
